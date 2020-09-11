@@ -1,0 +1,193 @@
+1.
+git - 프로젝트의 어떤 부분도 겹쳐쓰지 않게 프로젝트의 변경을 관리하는 버전관리 소프트웨어
+(여러명의 개발자가 특정 프로젝트를 자신의 컴퓨터로 협업하여 개발하면서 버전을 관리할 수 있다)
+GitHub -  분산 버전 관리 툴인 깃(Git)을 사용하는 프로젝트를 지원하는 웹호스팅 서비스
+git init - git 저장소 초기화
+git clone /로컬/저장소/경로 - 로컬 저장소를 복제
+저장소 구성 / 작업 디렉토리(Working directory) = 실제 파일들, 인덱스(Index) = 준비 영역(staging area)의 역할, HEAD = 최종 확정본(commit)
+git remote - 저장소 URL 설정
+git status - 현재 저장소에 있는 내용과 로컬 컴퓨터에 있는 내용이 얼마나 다른지 확인
+git add <파일 이름> / 변경된 파일 인덱스에 추가
+git commit -m " " / 변경 내용을 확정(HEAD에 반영, 원격 저장소에는 반영x)
+git push origin master / 변경 내용을 원격 서버에 올리기
+git pull / 로컬 저장소를 원격 저장소에 맞춰 갱신(원격 저장소의 변경 내용이 로컬 작업 디렉토리에 받아지고, 병합 됨)
+git merge <가지 이름> / 다른 가지에 있는 변경 내용을 현재 가지에 병합
+git tag x.x.x OO / 꼬리표 달기(OO=확정본 식별자)
+git checkout -- <파일 이름> / 로컬의 변경 내용을 변경 전 상태(HEAD)로 되돌림
+2.
+Python 3.8.5 (tags/v3.8.5:580fbb0, Jul 20 2020, 15:57:54) [MSC v.1924 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license()" for more information.
+>>> 123+456
+579// +연산
+>>> 101/3
+33.666666666666664// 별도의 정수,실수 지정없이 /연산 가능
+>>> 4/3
+1.3333333333333333
+>>> 4//3
+1
+>>> 3.1415*3*3
+28.2735// *연산
+>>> 3.1415*(20**2)
+1256.6000000000001// **으로 제곱
+>>> pi=3.141592653589793// 변수 저장
+>>> pi
+3.141592653589793
+>>> pi*4**2
+50.26548245743669
+>>> print(pi)// print로 값 출력
+3.141592653589793
+>>> r=7
+>>> area=pi*r**2
+>>> print(area)
+153.93804002589985
+>>> r=11
+>>> print(area)
+153.93804002589985
+>>> area=pi*r**2
+>>> print(area)
+380.132711084365
+>>> name1='안녕'
+>>> print(name1)
+안녕
+>>> name2="안녕"
+>>> print(name2)
+안녕// 큰따옴표, 작은따옴표 구분 x
+>>> order=4
+>>> type(order)
+<class 'int'>// type()로 어떤 class인지 확인 가능
+>>> type(name2)// 정수형 int
+<class 'str'>// 문자형 str
+>>> type(pi)
+<class 'float'>// 실수형 float
+>>> 4>3
+True// <,> 비교연산 가능 True,False로 반환
+>>> 4<3
+False
+>>> a=1>3
+>>> print(a)
+False
+>>> type(a)
+<class 'bool'>// 참,거짓은 bool형
+>>> first="Sangho"// 변수에 문자열을 담을 수 있다
+>>> last="Ju"
+>>> name=first+" "+last
+>>> name
+'Sangho Ju'
+>>> name*2
+'Sangho JuSangho Ju'// 문자열에 *가 가능
+>>> print(name)
+Sangho Ju
+>>> name[0]
+'S'// [n] 문자열의 n번째 값 
+>>> name[5]
+'o'
+>>> name[-2]
+'J'
+>>> name[2:4]
+'ng'// slice 기법을 통해 문자열의 n번째부터 그 이상까지의 값 출력이 가능
+>>> name[6]
+' '
+>>> name[:6]
+'Sangho'
+>>> name[:-2]
+'Sangho '
+>>> name[-2:]
+'Ju'
+>>> name[::2]
+'Snh u'
+>>> name[::-1]
+'uJ ohgnaS'// slice의 step으로 2개씩 이나 거꾸로도 가능
+>>> twice=['momo','sana','zwi','dahyun']
+>>> twice
+['momo', 'sana', 'zwi', 'dahyun']
+>>> black_pink=['jisu','jeni','rose']
+>>> black_pink
+['jisu', 'jeni', 'rose']
+>>> twice.append('jihyo')
+>>> twice
+['momo', 'sana', 'zwi', 'dahyun', 'jihyo']// append로 추가 가능
+>>> twice.sort()
+>>> twice
+['dahyun', 'jihyo', 'momo', 'sana', 'zwi']// sort로 정렬 가능
+>>> unite=twice+black_pink
+>>> unite
+['dahyun', 'jihyo', 'momo', 'sana', 'zwi', 'jisu', 'jeni', 'rose']// list끼리 +가능
+>>> unite[1]
+'jihyo'
+>>> unite[::2]
+['dahyun', 'momo', 'zwi', 'jeni']// list도 slice기법 적용 가능
+>>> score={'momo':80,'zwi':85}
+>>> score
+{'momo': 80, 'zwi': 85}
+>>> score['sana']
+Traceback (most recent call last):
+  File "<pyshell#62>", line 1, in <module>
+    score['sana']
+KeyError: 'sana'
+>>> score['sana']=90// dict에 데이터 추가 가능
+>>> score
+{'momo': 80, 'zwi': 85, 'sana': 90}
+>>> del score['zwi']// dict의 데이터 삭제 가능
+>>> score
+{'momo': 80, 'sana': 90}
+>>> score.keys()
+dict_keys(['momo', 'sana'])// dict의 key들만 불러옴
+>>> score.values()
+dict_values([80, 90])// dict의 value들만 불러옴
+>>> 'momo'in score
+True
+>>> 'zwi'in score
+False// in으로 dict에 데이터있나 확인가능
+>>> score.clear()
+>>> score
+{}// clear로 내용 제거 가능
+>>> t1=(1,2,3)
+>>> t4=1,2,3,4
+>>> t5=(1,'a',"park",(1,2))
+>>> type(t1)
+<class 'tuple'>
+>>> type(t4)
+<class 'tuple'>
+>>> type(t5)
+<class 'tuple'>
+>>> t1[1:]
+(2, 3)// tuple에 slice기법 가능
+>>> t1+t5
+(1, 2, 3, 1, 'a', 'park', (1, 2))// tuple끼리 +연산 가능
+>>> t4*t1
+Traceback (most recent call last):
+  File "<pyshell#85>", line 1, in <module>
+    t4*t1
+TypeError: can't multiply sequence by non-int of type 'tuple'// tuple끼리는 *연산이 안된다
+>>> t4*2
+(1, 2, 3, 4, 1, 2, 3, 4)
+>>> s1={1,2,3}
+>>> type(s1)
+<class 'set'>
+>>> s1={1,2,2,4,4,4}
+>>> s1
+{1, 2, 4}
+>>> l1=[1,2,2,2,3,3,3,4,4]
+>>> s1=set(l1)
+>>> s1// list타입으로 set해도 중복이 안된다
+{1, 2, 3, 4}
+>>> s2={3,4,6,7}
+>>> s1+s2
+Traceback (most recent call last):
+  File "<pyshell#97>", line 1, in <module>
+    s1+s2
+TypeError: unsupported operand type(s) for +: 'set' and 'set'// set타입끼리는 +연산이 되지 않는다
+>>> s1|s2
+{1, 2, 3, 4, 6, 7}// or연산 가능
+>>> s1&s2
+{3, 4}// and연산 가능
+>>> s2-s1
+{6, 7}// -연산가능
+>>> s1-s2
+{1, 2}
+>>> s1.add(8)
+>>> s1// add로 추가 가능
+{1, 2, 3, 4, 8}
+>>> s1.remove(8)
+>>> s1// remove로 제거 가능
+{1, 2, 3, 4}
