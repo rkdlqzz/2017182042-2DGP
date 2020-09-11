@@ -1,0 +1,175 @@
+1) 
+https://github.com/rkdlqzz/2017182042-2DGP.git
+2)
+gitignore
+gitignore 파일이란 git 버전 관리에서 제외할 파일 목록을 지정하는 파일을 말한다. 
+git으로 프로젝트를 관리할 때, 그 프로젝트 안의 특정파일들은 관리할 필요가 없는 경우가 있다.
+예를 들면, 프로젝트 설정파일, 자동으로 생성되는 로그파일, 빌드할 때 생기는 컴파일된 파일 등이 있다.
+따라서 이런 관리할 필요가 없는 파일들을 github 같은 repository 에 저장되지 않도록 gitignore를 사용하는 것이다.
+
+사용법
+git init 을 한 폴더 에다가 .gitignore 이라는 이름으로 파일을 하나 만들어주고,
+그 안에 한줄씩 제외할 파일 혹은 폴더를 쓰면 된다.
+
+*.a
+확장자가 .a 인 모든 파일을 무시합니다.
+folder_name/
+해당 폴더의 모든 파일을 무시합니다.
+folder_name/*.a
+해당 폴더의 확장자가 .a 인 모든 파일을 무시합니다.
+folder_name/**/*.a
+해당 폴더 포함한 하위 모든 폴더에서 확장자가 .a 인 모든 파일을 무시합니다.
+ /*.a
+현재 폴더의 확장자가 .a 인 모든파일을 무시합니다.
+
+등등 의 방법을 이용해서 제외할 파일들을 지정해주면 된다.
+
+python을 위한 gitignore
+
+# virtualenv  
+.venv/
+venv/
+ENV/
+가상환경 폴더(venv)
+Python 가상환경은 각 프로젝트마다 Python 모듈 및 라이브러리의 버전을 독립적으로 유지하기 위해 필요한 환경이다.
+또한 운영체제 마다 가상환경 폴더의 구성이 다르므로 OS 독립성을 유지하기 위해서 제외시킨다.
+
+*.log
+*.pot
+__pycache__/
+각종 로그 파일 및 임시파일들은 관리가 필요 없으므로 제외시킨다.
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytestdebug.log
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+doc/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
