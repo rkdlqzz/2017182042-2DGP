@@ -12,7 +12,7 @@ def handle_events(e):
     student.handle_event(e)
 
 
-open_canvas(800,750)
+open_canvas(800, 750)
 
 background = Background()
 student = Student()

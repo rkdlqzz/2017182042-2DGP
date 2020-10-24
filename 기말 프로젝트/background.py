@@ -1,9 +1,10 @@
 from pico2d import *
+import gfw_image
 
 
 class Background:
     def __init__(self):
-        self.image = load_image("res/kpu_campus.jpg")
+        self.image = gfw_image.load("res/kpu_campus.jpg")
 
     def draw(self):
         self.image.draw(400, 400, 1000, 800)
