@@ -1,39 +1,40 @@
+import gfw
 from pico2d import *
 from student import Student
 from background import Background
 
 
-def handle_events(e):
-    global running
-    if e.type == SDL_QUIT:
-        running = False
-    elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
-        running = False
-    student.handle_event(e)
+def enter():
+    global background, student
+    background = Background()
+    student = Student()
 
 
-open_canvas(800, 750)
+def update():
+    student.update()
 
-background = Background()
-student = Student()
 
-running = True
-while running:
-    clear_canvas()
+def draw():
     background.draw()
     student.draw()
 
-    update_canvas()
 
-    evts = get_events()
-    for e in evts:
-        handle_events(e)
+def handle_event(e):
+    global student
+    if e.type == SDL_QUIT:
+        gfw.quit()
+    elif e.type == SDL_KEYDOWN:
+        if e.key == SDLK_ESCAPE:
+            gfw.pop()
 
-    student.update()
-    background.update()
+    student.handle_event(e)
 
-    delay(0.05)
 
-close_canvas()
+def exit():
+    pass
+
+
+if __name__ == '__main__':
+    gfw.run_main()
 
 
