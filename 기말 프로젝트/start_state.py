@@ -1,6 +1,6 @@
 import gfw
 from pico2d import *
-import main_state
+import title_state
 
 
 def enter():
@@ -13,7 +13,7 @@ def update():
     global elapsed
     elapsed += gfw.delta_time
     if elapsed > 1.0:
-        gfw.change(main_state)
+        gfw.change(title_state)
 
 
 def draw():
