@@ -1,14 +1,15 @@
 from pico2d import *
 import gfw_image
+import gfw
 import gobj
 
 
 class Student:
     KEY_MAP = {
-        (SDL_KEYDOWN, SDLK_LEFT): (-6, 0),
-        (SDL_KEYDOWN, SDLK_RIGHT): (6, 0),
-        (SDL_KEYUP, SDLK_LEFT): (6, 0),
-        (SDL_KEYUP, SDLK_RIGHT): (-6, 0),
+        (SDL_KEYDOWN, SDLK_LEFT): (-1, 0),
+        (SDL_KEYDOWN, SDLK_RIGHT): (1, 0),
+        (SDL_KEYUP, SDLK_LEFT): (1, 0),
+        (SDL_KEYUP, SDLK_RIGHT): (-1, 0),
     }
     image = None
 
@@ -21,6 +22,7 @@ class Student:
         self.action = 1  # 왼쪽
         self.minx = 57 / 2
         self.maxx = get_canvas_width() - 57 / 2
+        self.time = 0
         if Student.image == None:
             Student.image = gfw_image.load("res/studentA.png")
 
@@ -31,21 +33,21 @@ class Student:
 
     def update(self):
         self.x = clamp(self.minx, self.x, self.maxx)    # 플레이어가 화면을 벗어나지 못하도록
-        self.updateAction()
+        if self.dx == 0:
+            self.fidx = 0
+        else:
+            self.time += gfw.delta_time
+            frame = self.time * 15
+            self.fidx = int(frame) % 7
+            if self.dx > 0:
+                self.action = 0
+            elif self.dx < 0:
+                self.action = 1
         gobj.move_obj(self)
 
     def updateDelta(self, ddx, ddy):
         self.dx += ddx
         self.dy += ddy
-
-    def updateAction(self):     # 플레이어 애니메이션
-        self.fidx = (self.fidx + 1) % 7
-        if self.dx == 0:
-            self.fidx = 0
-        elif self.dx > 0:
-            self.action = 0
-        elif self.dx < 0:
-            self.action = 1
 
     def handle_event(self, e):
         pair = (e.type, e.key)
