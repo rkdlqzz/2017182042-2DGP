@@ -7,7 +7,7 @@ class Background:
         self.image = gfw_image.load("res/kpu_campus.jpg")
 
     def draw(self):
-        self.image.draw(400, 400, 1000, 800)
+        self.image.draw(400, 375, 1280, 750)
 
     def update(self):
         pass
