@@ -4,6 +4,7 @@ import gfw_world
 from book import Book
 
 next_wave = 0
+b_index = 0
 
 
 def update():
@@ -14,11 +15,11 @@ def update():
 
 
 def generate_wave():
-    global wave_index, next_wave
-    x=random.randint(0, 800)
-    speed = -120
+    global b_index, next_wave
+    x = random.randint(0, 800)
+    speed = -(120 + 10 * b_index)
     b = Book(x, speed)
     gfw_world.add(gfw_world.layer.book, b)
-
+    b_index += 1
     next_wave = random.uniform(1, 2)
 

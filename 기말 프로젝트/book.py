@@ -1,5 +1,6 @@
 from pico2d import *
 import gfw
+import gfw_world
 import gfw_image
 
 
@@ -24,3 +25,9 @@ class Book:
         self.time += gfw.delta_time
         self.fidx = int(self.time * 12) % 8
         self.y += self.dy * gfw.delta_time
+
+        if self.y < -Book.SIZE:
+            self.remove()
+
+    def remove(self):
+        gfw_world.remove(self)

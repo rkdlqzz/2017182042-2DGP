@@ -1,5 +1,6 @@
 
 objects = []
+trashcan = []
 
 
 def init(layer_names):
@@ -48,8 +49,25 @@ def clear_at(layer_index):
 def update():
     for obj in all_objects():
         obj.update()
+    if len(trashcan) > 0:
+        empty_trashcan()
 
 
 def draw():
     for obj in all_objects():
         obj.draw()
+
+
+def remove(obj):
+    trashcan.append(obj)
+
+
+def empty_trashcan():
+    global trashcan
+    for obj in trashcan:
+        for layer_objects in objects:
+            try:
+                layer_objects.remove(obj)
+            except ValueError:
+                pass
+    trashcan = []
