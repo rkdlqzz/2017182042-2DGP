@@ -21,8 +21,9 @@ def enter():
 def update():
     gfw_world.update()
     book_gen.update()
+    # print('bg:', gfw_world.count_at(0), ' student:', gfw_world.count_at(1), ' book:', gfw_world.count_at(2))
 
-    
+
 def playtime():     # main_state 가 실행된 총 시간을 반환
     now = time.time()
     play_time = now - start_time

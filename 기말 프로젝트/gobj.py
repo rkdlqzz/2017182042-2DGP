@@ -9,6 +9,3 @@ def point_add(posx, posy, deltax, deltay):
 
 def move_obj(obj):
     obj.x, obj.y = point_add(obj.x, obj.y, obj.dx, obj.dy)
-
-
-
