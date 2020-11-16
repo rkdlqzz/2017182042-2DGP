@@ -5,14 +5,15 @@ import main_state
 from book import Book
 
 next_wave = 0
-
+p_time = 0
 
 def update():
-    global next_wave
+    global next_wave, p_time
     next_wave -= gfw.delta_time
     if next_wave < 0:
         generate_wave()
     print(main_state.playtime())
+    p_time = main_state.playtime()
 
 
 def generate_wave():

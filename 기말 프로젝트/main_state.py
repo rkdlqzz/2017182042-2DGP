@@ -1,5 +1,6 @@
 import gfw
 import gfw_world
+import gfw_font
 import time
 from pico2d import *
 from student import Student
@@ -16,7 +17,8 @@ def enter():
     student = Student()
     gfw_world.add(gfw_world.layer.student, student)
     start_time = time.time()
-
+    global font
+    font = gfw_font.load('res/SDMiSaeng.ttf', 50)
 
 def update():
     gfw_world.update()
@@ -32,7 +34,7 @@ def playtime():     # main_state 가 실행된 총 시간을 반환
 
 def draw():
     gfw_world.draw()
-
+    font.draw(20, get_canvas_height() - 40, 'Play time : %d' % book_gen.p_time)
 
 def handle_event(e):
     global student
