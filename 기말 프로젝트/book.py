@@ -15,11 +15,12 @@ class Book:
         self.b_width = self.image.w // 2
         self.b_height = self.image.h // 4
         self.time = 0
+        self.size1 = 70
 
     def draw(self):
         sx = self.b_width - (self.fidx % 2) * self.b_width
         sy = (self.fidx // 2) * self.b_height
-        self.image.clip_draw(sx, sy, self.b_width, self.b_height, self.x, self.y, 70, 70)
+        self.image.clip_draw(sx, sy, self.b_width, self.b_height, self.x, self.y, self.size1, self.size1)
 
     def update(self):
         self.time += gfw.delta_time
@@ -31,3 +32,8 @@ class Book:
 
     def remove(self):
         gfw_world.remove(self)
+
+    def get_bb(self):
+        halfw = self.size1 // 2
+        halfh = self.size1 // 2 - 7
+        return self.x - halfw + 5, self.y - halfh, self.x + halfw, self.y + halfh

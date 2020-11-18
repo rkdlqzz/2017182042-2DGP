@@ -12,7 +12,7 @@ def update():
     next_wave -= gfw.delta_time
     if next_wave < 0:
         generate_wave()
-    print(main_state.playtime())
+    # print(main_state.playtime())
     p_time = main_state.playtime()
 
 

@@ -55,3 +55,8 @@ class Student:
         pair = (e.type, e.key)
         if pair in Student.KEY_MAP:
             self.updateDelta(*Student.KEY_MAP[pair])
+
+    def get_bb(self):
+        halfw = self.s_width // 2 - 10
+        halfh = self.s_height // 2
+        return self.x - halfw, self.y - halfh, self.x + halfw, self.y + halfh
