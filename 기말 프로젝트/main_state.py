@@ -26,6 +26,8 @@ def update():
     gfw_world.update()
     book_gen.update()
     # print('bg:', gfw_world.count_at(0), ' student:', gfw_world.count_at(1), ' book:', gfw_world.count_at(2))
+    for b in gfw_world.objects_at(gfw_world.layer.book):
+        check_book(b)
 
 
 def playtime():     # main_state 가 실행된 총 시간을 반환
@@ -34,10 +36,17 @@ def playtime():     # main_state 가 실행된 총 시간을 반환
     return play_time
 
 
+def check_book(b):
+    if gobj.collides_box(student, b):
+        print('collide')
+        b.remove()
+        return
+
+
 def draw():
     gfw_world.draw()
     font.draw(20, get_canvas_height() - 40, 'Play time : %d' % book_gen.p_time)
-    gobj.draw_bounding_box()
+    gobj.draw_collision_box()
 
 
 def handle_event(e):
