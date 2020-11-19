@@ -10,7 +10,6 @@ import book_gen
 
 
 def enter():
-    global start_time
     gfw_world.init(['background', 'student', 'book'])
     global background, student, start_time
     background = Background()
@@ -24,7 +23,7 @@ def enter():
 
 def update():
     gfw_world.update()
-    book_gen.update()
+    book_gen.update(playtime())
     # print('bg:', gfw_world.count_at(0), ' student:', gfw_world.count_at(1), ' book:', gfw_world.count_at(2))
     for b in gfw_world.objects_at(gfw_world.layer.book):
         check_book(b)
