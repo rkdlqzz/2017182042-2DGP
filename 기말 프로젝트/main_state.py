@@ -10,7 +10,7 @@ import book_gen
 
 
 def enter():
-    gfw_world.init(['background', 'student', 'book'])
+    gfw_world.init(['background', 'book', 'student'])
     global background, student, start_time
     background = Background()
     gfw_world.add(gfw_world.layer.background, background)
@@ -38,13 +38,16 @@ def playtime():     # main_state 가 실행된 총 시간을 반환
 def check_book(b):
     if gobj.collides_box(student, b):
         print('collide')
+        student.decrease_life()
+        if student.life == 0:
+            gfw.quit()
         b.remove()
         return
 
 
 def draw():
     gfw_world.draw()
-    font.draw(20, get_canvas_height() - 40, 'Play time : %d' % book_gen.p_time)
+    font.draw(20, get_canvas_height() - 30, 'STAGE %d' % book_gen.p_time)
     gobj.draw_collision_box()
 
 

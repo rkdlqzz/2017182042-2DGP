@@ -21,8 +21,11 @@ class Student:
         self.fidx = 0   # 가만히
         self.action = 1  # 왼쪽
         self.time = 0
+        self.life = 3
+        self.life_image = None
         if Student.image == None:
             Student.image = gfw_image.load("res/studentA.png")
+            self.life_image = gfw_image.load("res/life.png")
         self.s_width = self.image.w // 7
         self.s_height = self.image.h // 2
         self.minx = self.s_width / 2
@@ -32,6 +35,10 @@ class Student:
         sx = self.fidx * self.s_width
         sy = self.action * self.s_height
         self.image.clip_draw(sx, sy, self.s_width, self.s_height, self.x, self.y)
+        n = self.life
+        while n > 0:
+            self.life_image.draw(145 - (3 - n) * 55, 680, 60, 60)
+            n -= 1
 
     def update(self):
         self.x = clamp(self.minx, self.x, self.maxx)    # 플레이어가 화면을 벗어나지 못하도록
@@ -60,3 +67,7 @@ class Student:
         halfw = self.s_width // 2 - 10
         halfh = self.s_height // 2
         return self.x - halfw, self.y - halfh, self.x + halfw, self.y + halfh
+
+    def decrease_life(self):
+        self.life -= 1
+        return self.life <= 0
