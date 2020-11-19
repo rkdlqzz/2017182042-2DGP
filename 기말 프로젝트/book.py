@@ -2,6 +2,7 @@ from pico2d import *
 import gfw
 import gfw_world
 import gfw_image
+import main_state
 
 
 class Book:
@@ -29,6 +30,7 @@ class Book:
 
         if self.y < -Book.SIZE:
             self.remove()
+            main_state.score.score += 5
 
     def remove(self):
         gfw_world.remove(self)

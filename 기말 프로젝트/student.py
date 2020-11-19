@@ -37,7 +37,7 @@ class Student:
         self.image.clip_draw(sx, sy, self.s_width, self.s_height, self.x, self.y)
         n = self.life
         while n > 0:
-            self.life_image.draw(145 - (3 - n) * 55, 680, 60, 60)
+            self.life_image.draw(650 + (3 - n) * 55, 665, 60, 60)
             n -= 1
 
     def update(self):

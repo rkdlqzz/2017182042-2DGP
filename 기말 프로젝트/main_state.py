@@ -7,10 +7,11 @@ from pico2d import *
 from student import Student
 from background import Background
 import book_gen
+from score import Score
 
 
 def enter():
-    gfw_world.init(['background', 'book', 'student'])
+    gfw_world.init(['background', 'book', 'student', 'ui'])
     global background, student, start_time
     background = Background()
     gfw_world.add(gfw_world.layer.background, background)
@@ -19,6 +20,10 @@ def enter():
     start_time = time.time()
     global font
     font = gfw_font.load('res/SDMiSaeng.ttf', 50)
+    global score, score_font
+    score = Score(30, get_canvas_height() - 50)
+    gfw_world.add(gfw_world.layer.ui, score)
+    score_font = gfw_font.load('res/SDMiSaeng.ttf', 70)
 
 
 def update():
@@ -27,6 +32,7 @@ def update():
     # print('bg:', gfw_world.count_at(0), ' student:', gfw_world.count_at(1), ' book:', gfw_world.count_at(2))
     for b in gfw_world.objects_at(gfw_world.layer.book):
         check_book(b)
+    score.score += gfw.delta_time
 
 
 def playtime():     # main_state 가 실행된 총 시간을 반환
@@ -41,13 +47,14 @@ def check_book(b):
         student.decrease_life()
         if student.life == 0:
             gfw.quit()
+        score.score += 5
         b.remove()
         return
 
 
 def draw():
     gfw_world.draw()
-    font.draw(20, get_canvas_height() - 30, 'STAGE %d' % book_gen.p_time)
+    font.draw(get_canvas_width() - 250, get_canvas_height() - 40, 'STAGE - %d학년' % 1)
     gobj.draw_collision_box()
 
 

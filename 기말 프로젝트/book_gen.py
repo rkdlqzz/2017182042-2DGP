@@ -20,6 +20,7 @@ def generate_wave(t):
     x = random.randint(0, 800)
 
     speed = -(120 + 30 * (t // 10))  # 10초마다 낙하 속도 30씩 증가
+    # speed = - 1000
     b = Book(x, speed)
     gfw_world.add(gfw_world.layer.book, b)
 
