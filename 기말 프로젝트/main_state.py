@@ -6,8 +6,8 @@ import time
 from pico2d import *
 from student import Student
 from background import Background
-import book_gen
 from score import Score
+import book_gen
 
 
 def enter():
@@ -20,10 +20,9 @@ def enter():
     start_time = time.time()
     global font
     font = gfw_font.load('res/SDMiSaeng.ttf', 50)
-    global score, score_font
+    global score
     score = Score(30, get_canvas_height() - 50)
     gfw_world.add(gfw_world.layer.ui, score)
-    score_font = gfw_font.load('res/SDMiSaeng.ttf', 70)
 
 
 def update():

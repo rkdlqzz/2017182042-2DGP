@@ -7,11 +7,13 @@ import main_state
 
 class Book:
     SIZE = 141
+    image = None
 
     def __init__(self, x, speed):
         self.x, self.y = x, get_canvas_height() + Book.SIZE
         self.dx, self.dy = 0, speed
-        self.image = gfw_image.load('res/book1.png')
+        if Book.image == None:
+            Book.image = gfw_image.load('res/book1.png')
         self.fidx = 0
         self.b_width = self.image.w // 2
         self.b_height = self.image.h // 4
