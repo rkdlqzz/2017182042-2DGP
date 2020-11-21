@@ -56,7 +56,7 @@ def check_book(b):
 
 def draw():
     gfw_world.draw()
-    font.draw(get_canvas_width() - 250, get_canvas_height() - 40, 'STAGE - %d학년' % 1)
+    font.draw(get_canvas_width() - 250, get_canvas_height() - 40, 'STAGE - %d학년' % (book_gen.stage + 1))
     # gobj.draw_collision_box()
     font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % playtime())
 

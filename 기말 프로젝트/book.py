@@ -7,8 +7,8 @@ import gfw_image
 class Book:
     SIZE = 141
 
-    def __init__(self, x, speed, type):
-        self.x, self.y = x, get_canvas_height() + Book.SIZE
+    def __init__(self, x, speed, type, sy):
+        self.x, self.y = x, get_canvas_height() + Book.SIZE + sy
         self.dx, self.dy = 0, speed
         self.type = type
         self.image = gfw_image.load('res/book%d.png' % type)
