@@ -42,19 +42,23 @@ def playtime():     # main_state 가 실행된 총 시간을 반환
 
 def check_book(b):
     if gobj.collides_box(student, b):
-        print('collide')
+        # print('collide')
         student.decrease_life()
         if student.life == 0:
             gfw.quit()
         score.score += 5
         b.remove()
         return
+    if b.y < -b.SIZE:
+        b.remove()
+        score.score += 5
 
 
 def draw():
     gfw_world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 40, 'STAGE - %d학년' % 1)
-    gobj.draw_collision_box()
+    # gobj.draw_collision_box()
+    font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % playtime())
 
 
 def handle_event(e):
