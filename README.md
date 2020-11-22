@@ -105,7 +105,8 @@ BGM, 캐릭터와 장애물 충돌 시 효과음, 난이도 증가 시 효과음
 흥미요소 추가를 위한 아이템 및 캐릭터 추가   
 ##### 8주차 - 최종점검
 최종점검 및 릴리즈
-## git commit 통계
+## git commit 통계 (11/22 기준)
+![통계](https://user-images.githubusercontent.com/70790091/99904368-c94ca400-2d0d-11eb-8383-63b69feb4af4.png)
 ## game object
 ### Student
 좌우 키 입력에 따라 dx,dy를 update해서 이동하여 그려진다   
