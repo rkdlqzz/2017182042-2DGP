@@ -8,10 +8,14 @@ next_gen_big = 5
 
 
 def update(t):
-    global next_gen_small, next_gen_big, stage
-    stage = t // 10
+    global next_gen_small, next_gen_big, stage, stage_cycle, exam_time
+    stage_cycle = 60    # stage 나누는 주기
+    stage = t // stage_cycle
     if stage > 3:   # stage 최대 4
         stage = 3
+    exam_time = 15   # 시험기간 몇 초인지
+    exam = check_exam(t)
+    print(exam)
     next_gen_small -= gfw.delta_time
     next_gen_big -= gfw.delta_time
     if next_gen_small < 0:
@@ -40,3 +44,11 @@ def gen_big():
     gfw_world.add(gfw_world.layer.book, b)
     next = 5 - int(stage) * 1.2   # 초기 - 5~6초마다 젠, stage 증가할수록 젠시간 감소
     next_gen_big = random.uniform(next, next + 1)
+
+
+def check_exam(t):  # 시험기간인지 체크
+    global stage
+    if (t - stage * stage_cycle) >= (stage_cycle - exam_time) and (t - stage * stage_cycle) <= stage_cycle :
+        return True
+    else:
+        return False

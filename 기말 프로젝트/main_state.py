@@ -42,8 +42,7 @@ def playtime():     # main_state 가 실행된 총 시간을 반환
 
 def check_book(b):
     if gobj.collides_box(student, b):
-        # print('collide')
-        student.decrease_life()
+        # student.decrease_life()
         if student.life == 0:
             gfw.quit()
         score.score += 5
