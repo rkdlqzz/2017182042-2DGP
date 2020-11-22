@@ -12,11 +12,13 @@ import book_gen
 
 def enter():
     gfw_world.init(['background', 'book', 'student', 'ui'])
-    global background, student, start_time
-    background = Background()
-    gfw_world.add(gfw_world.layer.background, background)
+    global student
     student = Student()
     gfw_world.add(gfw_world.layer.student, student)
+    global background
+    background = Background(student)
+    gfw_world.add(gfw_world.layer.background, background)
+    global start_time
     start_time = time.time()
     global font
     font = gfw_font.load('res/SDMiSaeng.ttf', 50)
