@@ -8,14 +8,15 @@ next_gen_big = 5
 
 
 def update(t):
-    global next_gen_small, next_gen_big, stage, stage_cycle, exam_time
-    stage_cycle = 60    # stage 나누는 주기
+    global next_gen_small, next_gen_big, stage, stage_cycle, exam, exam_time
+    # stage_cycle = 60    # stage 나누는 주기
+    stage_cycle = 10
     stage = t // stage_cycle
     if stage > 3:   # stage 최대 4
         stage = 3
-    exam_time = 15   # 시험기간 몇 초인지
+    # exam_time = 15   # 시험기간 몇 초인지
+    exam_time = 5
     exam = check_exam(t)
-    print(exam)
     next_gen_small -= gfw.delta_time
     next_gen_big -= gfw.delta_time
     if next_gen_small < 0:
