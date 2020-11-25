@@ -2,7 +2,6 @@ from pico2d import *
 import random
 import gfw
 import gfw_world
-# import main_state
 from book import Book
 
 next_gen_small = 0
@@ -12,15 +11,13 @@ next_gen_big = 5
 def update(t):
     global next_gen_small, next_gen_big, stage, stage_cycle,exam, exam_cycle
     # stage_cycle = 60    # stage 나누는 주기
-    stage_cycle = 10
+    stage_cycle = 6
     stage = t // stage_cycle
     if stage > 3:   # stage 최대 4
         stage = 3
     # exam_cycle = 15   # 시험기간 몇 초인지
-    exam_cycle = 5
+    exam_cycle = 3
     exam = check_exam(t)
-    if exam:
-        exam_time()
     next_gen_small -= gfw.delta_time
     next_gen_big -= gfw.delta_time
     if next_gen_small < 0:
@@ -57,7 +54,3 @@ def check_exam(t):  # 시험기간인지 체크
         return True
     else:
         return False
-
-
-def exam_time():
-    pass

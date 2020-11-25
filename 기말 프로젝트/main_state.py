@@ -25,6 +25,8 @@ def enter():
     global score
     score = Score(30, get_canvas_height() - 50)
     gfw_world.add(gfw_world.layer.ui, score)
+    global first
+    first = 0
 
 
 def update():
@@ -34,6 +36,7 @@ def update():
     for b in gfw_world.objects_at(gfw_world.layer.book):
         check_book(b)
     score.score += gfw.delta_time
+    exam_time(generator.exam)
 
 
 def playtime():     # main_state 가 실행된 총 시간을 반환
@@ -53,6 +56,18 @@ def check_book(b):
     if b.y < -b.SIZE:
         b.remove()
         score.score += 5
+
+
+def exam_time(exam):    # 시험기간에는 애니메이션 속도 증가 & book 크기 증가
+    if exam:
+        for b in gfw_world.objects_at(gfw_world.layer.book):
+            b.time += gfw.delta_time
+            if b.size == 70 or b.size == 100:
+                b.size += 20
+    else:
+        for b in gfw_world.objects_at(gfw_world.layer.book):
+            if b.size != 70 and b.size != 100:
+                b.size -= 20
 
 
 def draw():
