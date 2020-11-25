@@ -7,7 +7,7 @@ from pico2d import *
 from student import Student
 from background import Background
 from score import Score
-import book_gen
+import generator
 
 
 def enter():
@@ -21,7 +21,7 @@ def enter():
     global start_time
     start_time = time.time()
     global font
-    font = gfw_font.load('res/SDMiSaeng.ttf', 50)
+    font = gfw_font.load('res/HS여름물빛체.ttf', 40)
     global score
     score = Score(30, get_canvas_height() - 50)
     gfw_world.add(gfw_world.layer.ui, score)
@@ -29,7 +29,7 @@ def enter():
 
 def update():
     gfw_world.update()
-    book_gen.update(playtime())
+    generator.update(playtime())
     # print('bg:', gfw_world.count_at(0), ' student:', gfw_world.count_at(1), ' book:', gfw_world.count_at(2))
     for b in gfw_world.objects_at(gfw_world.layer.book):
         check_book(b)
@@ -57,9 +57,10 @@ def check_book(b):
 
 def draw():
     gfw_world.draw()
-    font.draw(get_canvas_width() - 250, get_canvas_height() - 40, 'STAGE - %d학년' % (book_gen.stage + 1))
-    # gobj.draw_collision_box()
+    font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
     font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % playtime())
+    # gobj.draw_collision_box()
+
 
 
 def handle_event(e):

@@ -1,14 +1,12 @@
 import gfw_font
 
-class Score:
-    font = None
 
+class Score:
     def __init__(self, x, y):
         self.x = x
         self.y = y
         self.reset()
-        if Score.font == None:
-            Score.font = gfw_font.load('res/HS여름물빛체.ttf', 70)
+        self.font = gfw_font.load('res/HS여름물빛체.ttf', 70)
 
     def reset(self):
         self.score = 0
