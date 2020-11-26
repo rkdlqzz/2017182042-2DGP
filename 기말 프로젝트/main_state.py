@@ -9,6 +9,8 @@ from background import Background
 from score import Score
 import generator
 
+paused = False
+
 
 def enter():
     gfw_world.init(['background', 'book', 'student', 'ui'])
@@ -25,11 +27,15 @@ def enter():
     global score
     score = Score(30, get_canvas_height() - 50)
     gfw_world.add(gfw_world.layer.ui, score)
-    global first
-    first = 0
+    global paused_time
+    paused_time = 0
 
 
 def update():
+    global paused_time
+    if paused:
+        paused_time += gfw.delta_time
+        return
     gfw_world.update()
     generator.update(playtime())
     # print('bg:', gfw_world.count_at(0), ' student:', gfw_world.count_at(1), ' book:', gfw_world.count_at(2))
@@ -39,9 +45,9 @@ def update():
     exam_time(generator.exam)
 
 
-def playtime():     # main_state 가 실행된 총 시간을 반환
+def playtime():     # main_state 가 실행된 총 시간 - pause 된 시간
     now = time.time()
-    play_time = now - start_time
+    play_time = now - start_time - paused_time
     return play_time
 
 
@@ -85,6 +91,9 @@ def handle_event(e):
     elif e.type == SDL_KEYDOWN:
         if e.key == SDLK_ESCAPE:
             gfw.pop()
+        elif e.key == SDLK_p:
+            global paused
+            paused = not paused
 
     student.handle_event(e)
 
