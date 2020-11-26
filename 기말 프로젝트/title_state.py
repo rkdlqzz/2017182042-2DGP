@@ -1,13 +1,16 @@
 import gfw
 from pico2d import *
 import main_state
+import gfw_image
+import gfw_font
 
 
 def enter():
-    global title, press, tbg
-    title = load_image('res/title.png')
-    press = load_image('res/press.png')
-    tbg = load_image('res/tbg.png')
+    global bg, panel, font, font2
+    bg = gfw_image.load('res/gray.png')
+    panel = gfw_image.load('res/panel2.png')
+    font = gfw_font.load('res/HS여름물빛체.ttf', 50)
+    font2 = gfw_font.load('res/HS여름물빛체.ttf', 120)
 
 
 def update():
@@ -15,9 +18,13 @@ def update():
 
 
 def draw():
-    tbg.draw(400, 375, 800, 750)
-    press.draw(400, 120)
-    title.draw(395, 450)
+    w = get_canvas_width()
+    h = get_canvas_height()
+    bg.draw(w // 2, h // 2, w, h)
+    font.draw(150, 90, 'PRESS SPACE TO START')
+    panel.draw(w // 2, h // 2, w, 800)
+    font2.draw(150, 440, 'CAMPUS')
+    font2.draw(150, 330, 'LIFE')
 
 
 def handle_event(e):
@@ -30,8 +37,8 @@ def handle_event(e):
 
 
 def exit():
-    global title, press, tbg
-    del title, press, tbg
+    global bg, panel, font, font2
+    del bg, panel, font, font2
 
 
 def pause():

@@ -80,23 +80,25 @@ def exam_time(exam):    # 시험기간에는 애니메이션 속도 증가 & boo
 def draw():
     gfw_world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
-    font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % playtime())
+    # font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
     if paused:
         pause()
     # gobj.draw_collision_box()
+
 
 def pause():
     x = get_canvas_width() // 2 - 25
     y = get_canvas_height() // 2 - 30
     fy = y - 2
-    image = gfw_image.load('res/panel.png')
-    image.draw(x, y, get_canvas_width(), get_canvas_height() - 50)
-    image2 = gfw_image.load('res/gray.png')
+    panel = gfw_image.load('res/panel.png')
+    panel.draw(x, y, get_canvas_width(), get_canvas_height() - 50)
+    bg = gfw_image.load('res/gray.png')
     for n in [150, 0, -150]:
-        image2.draw(x + 25, y + n, 360, 60)
+        bg.draw(x + 25, y + n, 360, 60)
     font.draw(x - 145, fy + 150, 'PRESS P TO RESUME')
     font.draw(x - 145, fy, 'PRESS ESC TO TITLE')
     font.draw(x - 115, fy - 150, 'CLICK X TO QUIT')
+
 
 def handle_event(e):
     global student
