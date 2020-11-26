@@ -20,7 +20,7 @@ class Background:
             self.image1.draw(x + dx * 0.2, 375, 1280, 750)
         else:
             self.image2.draw(x + dx * 0.2, 375, 1280, 750)
-            self.font.draw(get_canvas_width() // 2 - 220, get_canvas_height() // 2 + 100, 'MIDTERM EXAM', (255, 0, 0))
+            self.font.draw(get_canvas_width() // 2 - 220, get_canvas_height() // 2 + 100, 'MIDTERM EXAM', (155, 0, 0))
 
     def update(self):
         pass
