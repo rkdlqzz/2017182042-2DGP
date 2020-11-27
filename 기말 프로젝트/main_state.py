@@ -6,6 +6,7 @@ from student import Student
 from background import Background
 from score import Score
 import generator
+import highscore
 
 paused = False
 IN_GAME, GAME_OVER = 0, 1
@@ -32,6 +33,7 @@ def enter():
     gfw.world.add(gfw.world.layer.ui, score)
     global paused_time
     paused_time = 0
+    highscore.load()
 
 
 def update():
@@ -85,18 +87,9 @@ def exam_time(exam):    # 시험기간에는 애니메이션 속도 증가 & boo
 def draw():
     gfw.world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
-    # font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
+    font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
     if paused:
         pause()
-    if state == GAME_OVER:
-        panel = gfw.image.load('res/panel.png')
-        bg = gfw.image.load('res/gray.png')
-        font2 = gfw.font.load(('res/HS여름물빛체.ttf'), 50)
-        x = get_canvas_width() // 2 - 25
-        y = get_canvas_height() // 2 - 30
-        panel.draw(x, y, get_canvas_width(), get_canvas_height() - 50)
-        bg.draw(400, 625, 300, 60)
-        font2.draw(275, 620, 'GAME OVER')
     # gobj.draw_collision_box()
 
 
@@ -119,6 +112,7 @@ def start_game():
     if state != GAME_OVER:
         return
     score.reset()
+    gfw.world.remove(highscore)
     state = IN_GAME
     enter()
 
@@ -128,6 +122,8 @@ def end_game():
     if state != IN_GAME:
         return
     state = GAME_OVER
+    highscore.add(score.score)
+    gfw.world.add(gfw.world.layer.highscore, highscore)
 
 
 def handle_event(e):
