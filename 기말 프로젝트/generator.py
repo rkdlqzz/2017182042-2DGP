@@ -50,7 +50,8 @@ def gen_big():
 
 def check_exam(t):  # 시험기간인지 체크
     global stage
-    if (t - stage * stage_cycle) >= (stage_cycle - exam_cycle) and (t - stage * stage_cycle) <= stage_cycle :
-        return True
+    for i in range(0, 30):  # stage 4의 경우 stage가 증가하지 않더라도 시험기간은 계속 주기적으로 된다
+        if (t - i * stage_cycle) >= (stage_cycle - exam_cycle) and (t - i * stage_cycle) <= stage_cycle:
+            return True
     else:
         return False

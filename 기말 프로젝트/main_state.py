@@ -80,7 +80,7 @@ def exam_time(exam):    # 시험기간에는 애니메이션 속도 증가 & boo
 def draw():
     gfw_world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
-    # font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
+    font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
     if paused:
         pause()
     # gobj.draw_collision_box()
