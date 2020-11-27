@@ -8,10 +8,15 @@ from score import Score
 import generator
 
 paused = False
+IN_GAME, GAME_OVER = 0, 1
+state = IN_GAME
 
 
 def enter():
-    gfw.world.init(['background', 'book', 'student', 'ui'])
+    global state
+    state = IN_GAME
+    print(IN_GAME,GAME_OVER)
+    gfw.world.init(['background', 'book', 'student', 'highscore', 'ui'])
     global student
     student = Student()
     gfw.world.add(gfw.world.layer.student, student)
@@ -30,6 +35,9 @@ def enter():
 
 
 def update():
+    global state
+    if state == GAME_OVER:
+        return
     global paused_time
     if paused:
         paused_time += gfw.delta_time
@@ -51,9 +59,9 @@ def playtime():     # main_state 가 실행된 총 시간 - pause 된 시간
 
 def check_book(b):
     if gobj.collides_box(student, b):
-        # student.decrease_life()
+        student.decrease_life()
         if student.life == 0:
-            gfw.quit()
+            end_game()
         score.score += 5
         b.remove()
         return
@@ -77,9 +85,18 @@ def exam_time(exam):    # 시험기간에는 애니메이션 속도 증가 & boo
 def draw():
     gfw.world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
-    font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
+    # font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
     if paused:
         pause()
+    if state == GAME_OVER:
+        panel = gfw.image.load('res/panel.png')
+        bg = gfw.image.load('res/gray.png')
+        font2 = gfw.font.load(('res/HS여름물빛체.ttf'), 50)
+        x = get_canvas_width() // 2 - 25
+        y = get_canvas_height() // 2 - 30
+        panel.draw(x, y, get_canvas_width(), get_canvas_height() - 50)
+        bg.draw(400, 625, 300, 60)
+        font2.draw(275, 620, 'GAME OVER')
     # gobj.draw_collision_box()
 
 
@@ -97,16 +114,37 @@ def pause():
     font.draw(x - 115, fy - 150, 'CLICK X TO QUIT')
 
 
+def start_game():
+    global state, score
+    if state != GAME_OVER:
+        return
+    score.reset()
+    state = IN_GAME
+    enter()
+
+
+def end_game():
+    global state
+    if state != IN_GAME:
+        return
+    state = GAME_OVER
+
+
 def handle_event(e):
     global student
     if e.type == SDL_QUIT:
         gfw.quit()
     elif e.type == SDL_KEYDOWN:
         if e.key == SDLK_ESCAPE:
+            end_game()
             gfw.pop()
         elif e.key == SDLK_p:
             global paused
             paused = not paused
+        elif e.key == SDLK_RETURN:
+            start_game()
+        elif e.key == SDLK_e:
+            end_game()
 
     student.handle_event(e)
 
