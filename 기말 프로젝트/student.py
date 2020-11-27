@@ -1,5 +1,4 @@
 from pico2d import *
-import gfw_image
 import gfw
 import gobj
 
@@ -24,9 +23,9 @@ class Student:
         self.time = 0
         self.life = 3
         if Student.image == None:
-            Student.image = gfw_image.load("res/studentA.png")
+            Student.image = gfw.image.load("res/studentA.png")
         if Student.life_image == None:
-            Student.life_image = gfw_image.load("res/life.png")
+            Student.life_image = gfw.image.load("res/life.png")
         self.s_width = self.image.w // 7
         self.s_height = self.image.h // 2
         self.minx = self.s_width / 2

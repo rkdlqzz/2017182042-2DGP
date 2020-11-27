@@ -1,7 +1,4 @@
 import gfw
-import gfw_world
-import gfw_font
-import gfw_image
 import gobj
 import time
 from pico2d import *
@@ -14,20 +11,20 @@ paused = False
 
 
 def enter():
-    gfw_world.init(['background', 'book', 'student', 'ui'])
+    gfw.world.init(['background', 'book', 'student', 'ui'])
     global student
     student = Student()
-    gfw_world.add(gfw_world.layer.student, student)
+    gfw.world.add(gfw.world.layer.student, student)
     global background
     background = Background(student)
-    gfw_world.add(gfw_world.layer.background, background)
+    gfw.world.add(gfw.world.layer.background, background)
     global start_time
     start_time = time.time()
     global font
-    font = gfw_font.load('res/HS여름물빛체.ttf', 40)
+    font = gfw.font.load('res/HS여름물빛체.ttf', 40)
     global score
     score = Score(30, get_canvas_height() - 50)
-    gfw_world.add(gfw_world.layer.ui, score)
+    gfw.world.add(gfw.world.layer.ui, score)
     global paused_time
     paused_time = 0
 
@@ -37,10 +34,10 @@ def update():
     if paused:
         paused_time += gfw.delta_time
         return
-    gfw_world.update()
+    gfw.world.update()
     generator.update(playtime())
-    # print('bg:', gfw_world.count_at(0), ' student:', gfw_world.count_at(1), ' book:', gfw_world.count_at(2))
-    for b in gfw_world.objects_at(gfw_world.layer.book):
+    # print('bg:', gfw.world.count_at(0), ' student:', gfw.world.count_at(1), ' book:', gfw.world.count_at(2))
+    for b in gfw.world.objects_at(gfw.world.layer.book):
         check_book(b)
     score.score += gfw.delta_time
     exam_time(generator.exam)
@@ -67,18 +64,18 @@ def check_book(b):
 
 def exam_time(exam):    # 시험기간에는 애니메이션 속도 증가 & book 크기 증가
     if exam:
-        for b in gfw_world.objects_at(gfw_world.layer.book):
+        for b in gfw.world.objects_at(gfw.world.layer.book):
             b.time += gfw.delta_time
             if b.size == 70 or b.size == 100:
                 b.size += 20
     else:
-        for b in gfw_world.objects_at(gfw_world.layer.book):
+        for b in gfw.world.objects_at(gfw.world.layer.book):
             if b.size != 70 and b.size != 100:
                 b.size -= 20
 
 
 def draw():
-    gfw_world.draw()
+    gfw.world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
     font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
     if paused:
@@ -90,9 +87,9 @@ def pause():
     x = get_canvas_width() // 2 - 25
     y = get_canvas_height() // 2 - 30
     fy = y - 2
-    panel = gfw_image.load('res/panel.png')
+    panel = gfw.image.load('res/panel.png')
     panel.draw(x, y, get_canvas_width(), get_canvas_height() - 50)
-    bg = gfw_image.load('res/gray.png')
+    bg = gfw.image.load('res/gray.png')
     for n in [150, 0, -150]:
         bg.draw(x + 25, y + n, 360, 60)
     font.draw(x - 145, fy + 150, 'PRESS P TO RESUME')

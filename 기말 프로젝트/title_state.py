@@ -1,16 +1,14 @@
-import gfw
 from pico2d import *
+import gfw
 import main_state
-import gfw_image
-import gfw_font
 
 
 def enter():
     global bg, panel, font, font2
-    bg = gfw_image.load('res/gray.png')
-    panel = gfw_image.load('res/panel2.png')
-    font = gfw_font.load('res/HS여름물빛체.ttf', 50)
-    font2 = gfw_font.load('res/HS여름물빛체.ttf', 120)
+    bg = gfw.image.load('res/gray.png')
+    panel = gfw.image.load('res/panel2.png')
+    font = gfw.font.load('res/HS여름물빛체.ttf', 50)
+    font2 = gfw.font.load('res/HS여름물빛체.ttf', 120)
 
 
 def update():

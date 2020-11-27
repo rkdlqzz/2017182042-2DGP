@@ -1,4 +1,7 @@
 from pico2d import *
+import gfw.world
+import gfw.image
+import gfw.font
 import time
 
 running = True

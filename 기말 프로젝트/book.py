@@ -1,7 +1,6 @@
 from pico2d import *
 import gfw
-import gfw_world
-import gfw_image
+import gfw
 
 
 class Book:
@@ -11,7 +10,7 @@ class Book:
         self.x, self.y = x, get_canvas_height() + Book.SIZE + sy
         self.dx, self.dy = 0, speed
         self.type = type
-        self.image = gfw_image.load('res/book%d.png' % type)
+        self.image = gfw.image.load('res/book%d.png' % type)
         self.fidx = 0
         self.b_width = self.image.w // 2
         self.b_height = self.image.h // 4
@@ -34,7 +33,7 @@ class Book:
         self.y += self.dy * gfw.delta_time
 
     def remove(self):
-        gfw_world.remove(self)
+        gfw.world.remove(self)
 
     def get_bb(self):
         halfw = self.size // 2
