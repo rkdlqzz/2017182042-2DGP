@@ -1,26 +1,24 @@
 from pico2d import *
 import gfw
-import gfw
 
 
 class Book:
-    SIZE = 141
-
     def __init__(self, x, speed, type, sy):
-        self.x, self.y = x, get_canvas_height() + Book.SIZE + sy
-        self.dx, self.dy = 0, speed
         self.type = type
-        self.image = gfw.image.load('res/book%d.png' % type)
-        self.fidx = 0
-        self.b_width = self.image.w // 2
-        self.b_height = self.image.h // 4
-        self.time = 0
         if self.type == 1:
             self.size = 70
             self.s = 7
         if self.type == 2:
             self.size = 100
             self.s = 15
+        self.x, self.y = x, get_canvas_height() + self.size + sy
+        self.dx, self.dy = 0, speed
+        self.image = gfw.image.load('res/book%d.png' % type)
+        self.fidx = 0
+        self.b_width = self.image.w // 2
+        self.b_height = self.image.h // 4
+        self.time = 0
+
 
     def draw(self):
         sx = self.b_width - (self.fidx % 2) * self.b_width
