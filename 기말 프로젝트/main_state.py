@@ -11,6 +11,7 @@ import highscore
 paused = False
 IN_GAME, GAME_OVER = 0, 1
 state = IN_GAME
+black_w = 370
 
 
 def enter():
@@ -34,6 +35,9 @@ def enter():
     global paused_time
     paused_time = 0
     highscore.load()
+    global rectangle, black
+    rectangle = gfw.image.load('res/rectangle.png')
+    black = gfw.image.load('res/black.png')
 
 
 def update():
@@ -61,7 +65,7 @@ def playtime():     # main_state 가 실행된 총 시간 - pause 된 시간
 
 def check_book(b):
     if gobj.collides_box(student, b):
-        student.decrease_life()
+        # student.decrease_life()
         if student.life == 0:
             end_game()
         score.score += 5
@@ -88,9 +92,29 @@ def draw():
     gfw.world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
     font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
+    display_stage()
     if paused:
         pause()
+    if state == GAME_OVER:
+        highscore.draw()
     # gobj.draw_collision_box()
+
+
+def display_stage():    # stage 변경 시
+    global black_w
+    if generator.display_time != 0:
+        black.draw(get_canvas_width() // 2, 470, black_w, 170)
+        if generator.display_time == 3:
+            black_w = 370
+        if black_w <= 1100:
+            black_w += 20
+        rectangle.draw(get_canvas_width() // 2, get_canvas_height() // 2 + 100, 400, 170)
+        font.draw(get_canvas_width() // 2 - 60, get_canvas_height() // 2 + 100, 'STAGE %d'\
+                  % (generator.stage + 1), (200, 200, 200))
+        if not paused and not state == GAME_OVER:
+            generator.display_time -= gfw.delta_time
+    if generator.display_time < 0:
+        generator.display_time = 0
 
 
 def pause():
@@ -115,6 +139,7 @@ def start_game():
     gfw.world.remove(highscore)
     state = IN_GAME
     enter()
+    generator.last_stage = -2
 
 
 def end_game():

@@ -5,17 +5,22 @@ from book import Book
 
 next_gen_small = 0
 next_gen_big = 5
+last_stage = -1
+display_time = 0
 
 
 def update(t):
-    global next_gen_small, next_gen_big, stage, stage_cycle,exam, exam_cycle
-    # stage_cycle = 60    # stage 나누는 주기
-    stage_cycle = 6
+    global next_gen_small, next_gen_big, stage, stage_cycle, exam, exam_cycle, last_stage, display_time
+    # stage_cycle = 40    # stage 나누는 주기
+    stage_cycle = 10
     stage = t // stage_cycle
     if stage > 3:   # stage 최대 4
         stage = 3
-    # exam_cycle = 15   # 시험기간 몇 초인지
-    exam_cycle = 3
+    if stage > last_stage:  # stage가 바뀌는 경우
+        display_time = 3
+        last_stage += 1
+    # exam_cycle = 10   # 시험기간 몇 초인지
+    exam_cycle = 5
     exam = check_exam(t)
     next_gen_small -= gfw.delta_time
     next_gen_big -= gfw.delta_time
