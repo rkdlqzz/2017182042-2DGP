@@ -65,10 +65,17 @@ def draw():
     font.draw(200, 570, 'RANK   SCORE                       DATE')
     rank = 1
     y = 530
-    color = (0, 0, 0)
     for e in scores:
         bg.draw(400, y + 47 - 45, 420, 30)
         str = "{:2d} {:10d}".format(rank, int(e.score))
+        color = (0, 0, 0)
+        if rank == last_rank:
+            color = (0, 255, 0)  # 초
+            font.draw(120, y, 'NEW', color)
+        elif rank == 1: color = (255, 0, 0)   # 빨
+        elif rank == 2: color = (255, 128, 0)  # 주
+        elif rank == 3: color = (255, 255, 0)  # 노
+
         font.draw(210, y, str, color)
         font.draw(360, y, time.asctime(time.localtime(e.time)), color)
         y -= 45
