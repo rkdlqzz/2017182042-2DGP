@@ -208,11 +208,13 @@ def handle_event(e):
             gfw.pop()
         elif e.key == SDLK_p:
             global paused
-            paused = not paused
+            if state != GAME_OVER:
+                paused = not paused
         elif e.key == SDLK_RETURN:
             start_game()
         elif e.key == SDLK_e:
-            end_game()
+            if not paused:
+                end_game()
 
     student.handle_event(e)
 
