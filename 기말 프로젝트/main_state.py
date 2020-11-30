@@ -12,6 +12,7 @@ paused = False
 IN_GAME, GAME_OVER = 0, 1
 state = IN_GAME
 black_w = 370
+# play_music = False
 
 
 def enter():
@@ -26,8 +27,9 @@ def enter():
     gfw.world.add(gfw.world.layer.background, background)
     global start_time
     start_time = time.time()
-    global font
+    global font, font2
     font = gfw.font.load('res/HS여름물빛체.ttf', 40)
+    font2 = gfw.font.load('res/HS여름물빛체.ttf', 55)
     global score
     score = Score(30, get_canvas_height() - 50)
     gfw.world.add(gfw.world.layer.ui, score)
@@ -38,12 +40,13 @@ def enter():
     rectangle = gfw.image.load('res/rectangle.png')
     black = gfw.image.load('res/black.png')
     generator.last_stage = -1
-    global bg_music1, bg_music2, collide_b_wav
+    global bg_music1, bg_music2, play_music1, play_music2, collide_b_wav
     bg_music1 = load_music('res/bg1.mp3')
-    bg_music1.set_volume(40)
+    bg_music1.set_volume(50)
     bg_music1.repeat_play()
+    play_music1 = True
     bg_music2 = load_music('res/bg2.mp3')
-    bg_music2.set_volume(60)
+    play_music2 = False
     collide_b_wav = load_wav('res/c_b.wav')
 
 
@@ -62,6 +65,7 @@ def update():
         check_book(b)
     score.score += gfw.delta_time
     exam_time(generator.exam)
+    update_music()
 
 
 def paused_update():    # pause 시 update 해줄 것 - book 애니메이션
@@ -105,6 +109,30 @@ def exam_time(exam):    # 시험기간에는 애니메이션 속도 증가 & boo
                 b.size -= 20
 
 
+def update_music():     # 기본, exam_time 배경음악 변경
+    global bg_music1, bg_music2, play_music1, play_music2
+    for i in range(0, 30):
+        if int(playtime()) == (i * generator.stage_cycle) - generator.exam_cycle:
+            if play_music1 == True:
+                bg_music1.stop()
+                play_music1 = False
+            if play_music2 == False:
+                bg_music2.repeat_play()
+                play_music2 = True
+        if int(playtime()) == (i * generator.stage_cycle):
+            if play_music2 == True:
+                bg_music2.stop()
+                play_music2 = False
+            if play_music1 == False:
+                bg_music1.repeat_play()
+                play_music1 = True
+    if play_music2 == True:
+        bg_music1.set_volume(130)
+    else:
+        bg_music1.set_volume(50)
+
+
+
 def draw():
     gfw.world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
@@ -124,6 +152,8 @@ def paused_draw():  # pause 시 메뉴 그리기
     panel = gfw.image.load('res/panel.png')
     panel.draw(x, y, get_canvas_width(), get_canvas_height() - 50)
     bg = gfw.image.load('res/gray.png')
+    bg.draw(400, 623, 250, 60)
+    font2.draw(330, 620, 'MENU')
     for n in [150, 0, -150]:
         bg.draw(x + 25, y + n, 360, 60)
     font.draw(x - 145, fy + 150, 'PRESS P TO RESUME')
@@ -188,11 +218,10 @@ def handle_event(e):
 
 
 def exit():
-    pass
-    global bg_music1, bg_music2
+    global bg_music1, bg_music2, collide_b_wav
     bg_music1.stop()
     bg_music2.stop()
-    del bg_music1, bg_music2
+    del bg_music1, bg_music2, collide_b_wav
 
 
 if __name__ == '__main__':

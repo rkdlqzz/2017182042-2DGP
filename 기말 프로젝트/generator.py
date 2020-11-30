@@ -13,7 +13,8 @@ def update(t):
     global next_gen_small, next_gen_big, stage, stage_cycle, exam, exam_cycle, last_stage, display_time
     # stage_cycle = 40    # stage 나누는 주기
     stage_cycle = 10
-    stage = 3# t // stage_cycle
+    # stage = 3
+    stage = t // stage_cycle
     if stage > 3:   # stage 최대 4
         stage = 3
     if stage > last_stage:  # stage가 바뀌는 경우
