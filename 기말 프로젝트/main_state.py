@@ -38,6 +38,14 @@ def enter():
     rectangle = gfw.image.load('res/rectangle.png')
     black = gfw.image.load('res/black.png')
     generator.last_stage = -1
+    global bg_music1, bg_music2, collide_b_wav
+    bg_music1 = load_music('res/bg1.mp3')
+    bg_music1.set_volume(40)
+    bg_music1.repeat_play()
+    bg_music2 = load_music('res/bg2.mp3')
+    bg_music2.set_volume(60)
+    collide_b_wav = load_wav('res/c_b.wav')
+
 
 
 def update():
@@ -56,7 +64,7 @@ def update():
     exam_time(generator.exam)
 
 
-def paused_update():    # pause시 update 해줄 것 - book 애니메이션
+def paused_update():    # pause 시 update 해줄 것 - book 애니메이션
     global paused_time
     paused_time += gfw.delta_time
     for b in gfw.world.objects_at(gfw.world.layer.book):
@@ -65,8 +73,10 @@ def paused_update():    # pause시 update 해줄 것 - book 애니메이션
 
 
 def check_book(b):
+    global collide_b_wav
     if gobj.collides_box(student, b):
-        student.decrease_life()
+        collide_b_wav.play()
+        # student.decrease_life()
         if student.life == 0:
             end_game()
         score.score += 5
@@ -107,7 +117,7 @@ def draw():
     # gobj.draw_collision_box()
 
 
-def paused_draw():  # pause시 메뉴 그리기
+def paused_draw():  # pause 시 메뉴 그리기
     x = get_canvas_width() // 2 - 25
     y = get_canvas_height() // 2 - 30
     fy = y - 2
@@ -179,6 +189,10 @@ def handle_event(e):
 
 def exit():
     pass
+    global bg_music1, bg_music2
+    bg_music1.stop()
+    bg_music2.stop()
+    del bg_music1, bg_music2
 
 
 if __name__ == '__main__':
