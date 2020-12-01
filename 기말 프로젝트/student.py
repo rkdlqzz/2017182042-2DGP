@@ -30,11 +30,15 @@ class Student:
         self.s_height = self.image.h // 2
         self.minx = self.s_width / 2
         self.maxx = get_canvas_width() - self.s_width / 2
+        self.size_w = 57    # 77
+        self.size_h = 99    # 119
+        self.scale_time = 0
 
     def draw(self):
+        # print(self.s_width, self.s_height)
         sx = self.fidx * self.s_width
         sy = self.action * self.s_height
-        self.image.clip_draw(sx, sy, self.s_width, self.s_height, self.x, self.y)
+        self.image.clip_draw(sx, sy, self.s_width, self.s_height, self.x, self.y, self.size_w, self.size_h)
         n = self.life
         while n > 0:
             self.life_image.draw(650 + (3 - n) * 55, 665, 60, 60)
@@ -53,6 +57,7 @@ class Student:
             elif self.dx < 0:
                 self.action = 1
         gobj.move_obj(self)
+        self.update_size()
 
     def updateDelta(self, ddx, ddy):
         self.dx += ddx
@@ -64,10 +69,23 @@ class Student:
             self.updateDelta(*Student.KEY_MAP[pair])
 
     def get_bb(self):
-        halfw = self.s_width // 2 - 10
-        halfh = self.s_height // 2
-        return self.x - halfw, self.y - halfh, self.x + halfw, self.y + halfh
+        halfw = self.size_w // 2 - 12
+        halfh = self.size_h // 2
+        return self.x - halfw, self.y - halfh + 15, self.x + halfw, self.y + halfh
 
     def decrease_life(self):
         self.life -= 1
         return self.life <= 0
+
+    def update_size(self):  # book2와 충돌 시 student 잠시 거대화
+        s_max = 25  # 최대 증가량
+        if self.scale_time > 0:
+            self.scale_time -= gfw.delta_time
+        else:
+            self.scale_time = 0
+        if (self.scale_time > 0 and self.size_w < 57 + s_max):
+            self.size_w += 1
+            self.size_h += 1.1
+        if (self.scale_time == 0 and self.size_w > 57):
+            self.size_w -= 1
+            self.size_h -= 1.1

@@ -35,9 +35,11 @@ def enter():
     global paused_time
     paused_time = 0
     highscore.load()
-    global rectangle, black
+    global rectangle, black, panel, gray
     rectangle = gfw.image.load('res/rectangle.png')
     black = gfw.image.load('res/black.png')
+    panel = gfw.image.load('res/panel.png')
+    gray = gfw.image.load('res/gray.png')
     generator.last_stage = -1
     global bg_music1, bg_music2, play_music1, play_music2, collide_b_wav
     bg_music1 = load_music('res/bg1.mp3')
@@ -59,7 +61,7 @@ def update():
         return
     gfw.world.update()
     generator.update(playtime())
-    # print('bg:', gfw.world.count_at(0), ' student:', gfw.world.count_at(1), ' book:', gfw.world.count_at(2))
+    # print(' book:', gfw.world.count_at(1))
     for b in gfw.world.objects_at(gfw.world.layer.book):
         check_book(b)
     score.score += gfw.delta_time
@@ -82,10 +84,12 @@ def check_book(b):
         # student.decrease_life()
         if student.life == 0:
             end_game()
+        if b.type == 2:
+            student.scale_time = 5
         score.score += 5
         b.remove()
         return
-    if b.y < -b.size + 30:
+    if b.y < -b.size + 50:
         b.remove()
         score.score += 5
 
@@ -97,15 +101,21 @@ def playtime():     # main_state 가 실행된 총 시간 - pause 된 시간
 
 
 def exam_time(exam):    # 시험기간에는 애니메이션 속도 증가 & book 크기 증가
+    ds = 1  # update 당 size 증가량
+    s_max = 25  # 최대 증가량
     if exam:
         for b in gfw.world.objects_at(gfw.world.layer.book):
             b.time += gfw.delta_time
-            if b.size == 70 or b.size == 100:
-                b.size += 20
+            if b.type == 1 and b.size < 70 + s_max:
+                b.size += ds
+            elif b.type == 2 and b.size < 100 + s_max:
+                b.size += ds
     else:
         for b in gfw.world.objects_at(gfw.world.layer.book):
-            if b.size != 70 and b.size != 100:
-                b.size -= 20
+            if b.type == 1 and b.size > 70:
+                b.size -= ds
+            elif b.type == 2 and b.size > 100:
+                b.size -= ds
 
 
 def update_music():     # 기본, exam_time 배경음악 변경
@@ -148,13 +158,11 @@ def paused_draw():  # pause 시 메뉴 그리기
     x = get_canvas_width() // 2 - 25
     y = get_canvas_height() // 2 - 30
     fy = y - 2
-    panel = gfw.image.load('res/panel.png')
     panel.draw(x, y, get_canvas_width(), get_canvas_height() - 50)
-    bg = gfw.image.load('res/gray.png')
-    bg.draw(400, 623, 250, 60)
+    gray.draw(400, 623, 250, 60)
     font2.draw(330, 620, 'MENU')
     for n in [150, 0, -150]:
-        bg.draw(x + 25, y + n, 360, 60)
+        gray.draw(x + 25, y + n, 360, 60)
     font.draw(x - 145, fy + 150, 'PRESS P TO RESUME')
     font.draw(x - 145, fy, 'PRESS ESC TO TITLE')
     font.draw(x - 115, fy - 150, 'CLICK X TO QUIT')
@@ -168,7 +176,7 @@ def display_stage():    # stage 변경 시
             black_w = 370
         if black_w <= 1100:
             black_w += 20
-        rectangle.draw(get_canvas_width() // 2, get_canvas_height() // 2 + 100, 400, 170)
+        rectangle.draw(get_canvas_width() // 2, get_canvas_height() // 2 + 100, 400, 110)
         font.draw(get_canvas_width() // 2 - 60, get_canvas_height() // 2 + 100, 'STAGE %d'\
                   % (generator.stage + 1), (200, 200, 200))
         if not paused and not state == GAME_OVER:
