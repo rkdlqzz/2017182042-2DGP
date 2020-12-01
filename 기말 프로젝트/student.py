@@ -94,6 +94,11 @@ class Student:
     def update_image(self):  # 투명화 체크
         if self.invisible_time > 0:
             self.invisible_time -= gfw.delta_time
+            if self.invisible_time < 1.3:   # 투명화 지속시간이 얼마 안남으면 깜빡거림
+                if self.image == self.image1:
+                    self.image = self.image2
+                elif self.image == self.image2:
+                    self.image = self.image1
         else:
             self.invisible_time = 0
             self.image = self.image1

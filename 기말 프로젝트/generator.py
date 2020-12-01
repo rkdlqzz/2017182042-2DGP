@@ -36,14 +36,6 @@ def update(t):
         gen_item()
 
 
-def gen_item():
-    global next_gen_item
-    x = random.randint(0, 800)
-    i = Item(x, 1)
-    gfw.world.add(gfw.world.layer.item, i)
-    next = 5  # 초기 - 5~6초마다 젠, stage 증가할수록 젠시간 감소
-    next_gen_item = random.uniform(next, next + 1)
-
 def gen_small():
     global next_gen_small
     for x in range(1, int(stage) + 2):  # stage 당 생성되는 book 개수 : 1, 2, 3, 4
@@ -64,6 +56,15 @@ def gen_big():
     gfw.world.add(gfw.world.layer.book, b)
     next = 5 - stage * 1.2   # 초기 - 5~6초마다 젠, stage 증가할수록 젠시간 감소
     next_gen_big = random.uniform(next, next + 1)
+
+
+def gen_item():
+    global next_gen_item
+    x = random.randint(0, 800)
+    i = Item(x, 1)
+    gfw.world.add(gfw.world.layer.item, i)
+    next = 5  # 초기 - 5~6초마다 젠, stage 증가할수록 젠시간 감소
+    next_gen_item = random.uniform(next, next + 1)
 
 
 def check_exam(t):  # 시험기간인지 체크
