@@ -10,8 +10,6 @@ class Student:
         (SDL_KEYUP, SDLK_LEFT): (1.5, 0),
         (SDL_KEYUP, SDLK_RIGHT): (-1.5, 0),
     }
-    image = None
-    life_image = None
 
     def __init__(self):
         self.x = get_canvas_width() / 2
@@ -22,10 +20,10 @@ class Student:
         self.action = 1  # 왼쪽
         self.time = 0
         self.life = 3
-        if Student.image == None:
-            Student.image = gfw.image.load("res/studentA.png")
-        if Student.life_image == None:
-            Student.life_image = gfw.image.load("res/life.png")
+        self.image1 = gfw.image.load("res/studentA.png")
+        self.image2 = gfw.image.load("res/studentA_invisible.png")
+        self.image = self.image1
+        self.life_image = gfw.image.load("res/life.png")
         self.s_width = self.image.w // 7
         self.s_height = self.image.h // 2
         self.minx = self.s_width / 2
@@ -33,6 +31,8 @@ class Student:
         self.size_w = 57    # 77
         self.size_h = 99    # 119
         self.scale_time = 0
+        self.invisible_time = 0
+        self.status_invisible = False
 
     def draw(self):
         # print(self.s_width, self.s_height)
@@ -58,6 +58,7 @@ class Student:
                 self.action = 1
         gobj.move_obj(self)
         self.update_size()
+        self.update_image()
 
     def updateDelta(self, ddx, ddy):
         self.dx += ddx
@@ -89,3 +90,11 @@ class Student:
         if (self.scale_time == 0 and self.size_w > 57):
             self.size_w -= 1
             self.size_h -= 1.1
+
+    def update_image(self):  # 투명화 체크
+        if self.invisible_time > 0:
+            self.invisible_time -= gfw.delta_time
+        else:
+            self.invisible_time = 0
+            self.image = self.image1
+            self.status_invisible = False

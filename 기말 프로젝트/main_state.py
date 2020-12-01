@@ -17,7 +17,7 @@ black_w = 370
 def enter():
     global state
     state = IN_GAME
-    gfw.world.init(['background', 'book', 'student', 'highscore', 'ui'])
+    gfw.world.init(['background', 'book', 'item', 'student', 'highscore', 'ui'])
     global student
     student = Student()
     gfw.world.add(gfw.world.layer.student, student)
@@ -64,6 +64,8 @@ def update():
     # print(' book:', gfw.world.count_at(1))
     for b in gfw.world.objects_at(gfw.world.layer.book):
         check_book(b)
+    for i in gfw.world.objects_at(gfw.world.layer.item):
+        check_item(i)
     score.score += gfw.delta_time
     exam_time(generator.exam)
     update_music()
@@ -80,8 +82,10 @@ def paused_update():    # pause 시 update 해줄 것 - book 애니메이션
 def check_book(b):
     global collide_b_wav
     if gobj.collides_box(student, b):
+        if student.status_invisible == True:    # 투명상태이면 충돌해도 변호 x
+            return
         collide_b_wav.play()
-        # student.decrease_life()
+        student.decrease_life()
         if student.life == 0:
             end_game()
         if b.type == 2:
@@ -92,6 +96,20 @@ def check_book(b):
     if b.y < -b.size + 50:
         b.remove()
         score.score += 5
+
+
+def check_item(i):  # item과 충돌
+    global collide_b_wav
+    if gobj.collides_box(student, i):
+        collide_b_wav.play()
+        if i.type == 1:     # 투명화
+            student.invisible_time = 5
+            student.status_invisible = True
+            student.image = student.image2
+        i.remove()
+        return
+    if i.y < -i.size + 50:
+        i.remove()
 
 
 def playtime():     # main_state 가 실행된 총 시간 - pause 된 시간
@@ -139,7 +157,6 @@ def update_music():     # 기본, exam_time 배경음악 변경
         bg_music1.set_volume(130)
     else:
         bg_music1.set_volume(50)
-
 
 
 def draw():

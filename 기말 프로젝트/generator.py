@@ -2,15 +2,17 @@ from pico2d import *
 import random
 import gfw
 from book import Book
+from item import Item
 
 next_gen_small = 0
 next_gen_big = 5
+next_gen_item = 5
 last_stage = -1
 display_time = 0
 
 
 def update(t):
-    global next_gen_small, next_gen_big, stage, stage_cycle, exam, exam_cycle, last_stage, display_time
+    global next_gen_small, next_gen_big, stage, stage_cycle, exam, exam_cycle, last_stage, display_time, next_gen_item
     # stage_cycle = 40    # stage 나누는 주기
     stage_cycle = 10
     # stage = 3
@@ -25,11 +27,22 @@ def update(t):
     exam = check_exam(t)
     next_gen_small -= gfw.delta_time
     next_gen_big -= gfw.delta_time
+    next_gen_item -= gfw.delta_time
     if next_gen_small < 0:
         gen_small()
     if next_gen_big < 0:
         gen_big()
+    if next_gen_item < 0:
+        gen_item()
 
+
+def gen_item():
+    global next_gen_item
+    x = random.randint(0, 800)
+    i = Item(x, 1)
+    gfw.world.add(gfw.world.layer.item, i)
+    next = 5  # 초기 - 5~6초마다 젠, stage 증가할수록 젠시간 감소
+    next_gen_item = random.uniform(next, next + 1)
 
 def gen_small():
     global next_gen_small
