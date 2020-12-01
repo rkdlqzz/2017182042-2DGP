@@ -12,7 +12,6 @@ paused = False
 IN_GAME, GAME_OVER = 0, 1
 state = IN_GAME
 black_w = 370
-# play_music = False
 
 
 def enter():
