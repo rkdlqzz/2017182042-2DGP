@@ -85,10 +85,9 @@ def check_book(b):
         if student.status_invisible == True:    # 투명상태이면 충돌해도 변호 x
             return
         collide_b_wav.play()
-        student.decrease_life()
-        if student.life == 0:
+        if student.decrease_life():
             end_game()
-        if b.type == 2:
+        if b.type == 2: # book2와 충돌 시 student 거대화
             student.scale_time = 5
         score.score += 5
         b.remove()
@@ -106,6 +105,9 @@ def check_item(i):  # item과 충돌
             student.invisible_time = 5
             student.status_invisible = True
             student.image = student.image2
+        if i.type == 2:     # 라이프
+            if student.increase_life():  # life가 max인 경우 추가점수
+                score.score += 10
         i.remove()
         return
     if i.y < -i.size + 50:

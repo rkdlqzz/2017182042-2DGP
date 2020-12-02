@@ -78,6 +78,11 @@ class Student:
         self.life -= 1
         return self.life <= 0
 
+    def increase_life(self):
+        if self.life < 3:
+            self.life += 1
+        return self.life >= 3
+
     def update_size(self):  # book2와 충돌 시 student 잠시 거대화
         s_max = 25  # 최대 증가량
         if self.scale_time > 0:
