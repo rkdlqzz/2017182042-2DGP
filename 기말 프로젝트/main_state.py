@@ -17,7 +17,7 @@ black_w = 370
 def enter():
     global state
     state = IN_GAME
-    gfw.world.init(['background', 'student', 'book', 'item', 'highscore', 'ui'])
+    gfw.world.init(['background', 'student', 'item', 'book', 'highscore', 'ui'])
     global student
     student = Student()
     gfw.world.add(gfw.world.layer.student, student)
@@ -111,12 +111,17 @@ def check_item(i):  # item과 충돌
             student.invisible_time = 5
             student.status_invisible = True
             student.image = student.image2
+            if student.status_angry == True:    # angry 상태에서 투명화되면 angry 효과 해제
+                student.status_angry = False
+                student.angry_time = 0
+                student.fire = None
         if i.type == 2:     # 라이프
             if student.increase_life():  # life가 max인 경우 추가점수
                 score.score += 10
         if i.type == 3:     # 아드레날린 주사
             student.status_angry = True
             student.angry_time = 5
+            student.fire = student.fire_image
         i.remove()
         return
     if i.y < -i.size + 50:

@@ -15,8 +15,8 @@ def update(t):
     global next_gen_small, next_gen_big, stage, stage_cycle, exam, exam_cycle, last_stage, display_time, next_gen_item
     #stage_cycle = 45    # stage 나누는 주기
     stage_cycle = 10
-    # stage = 3
-    stage = t // stage_cycle
+    stage = 3
+    # stage = t // stage_cycle
     if stage > 3:   # stage 최대 4
         stage = 3
     if stage > last_stage:  # stage가 바뀌는 경우
@@ -64,7 +64,7 @@ def gen_item():
     type = random.randint(1, 3)     # item type 랜덤하게
     i = Item(x, type)
     gfw.world.add(gfw.world.layer.item, i)
-    next = 1#1 # 5
+    next = 5 - stage * 1.2
     next_gen_item = random.uniform(next, next + 1)
 
 

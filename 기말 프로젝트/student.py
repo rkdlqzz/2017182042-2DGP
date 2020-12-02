@@ -33,7 +33,8 @@ class Student:
         self.scale_time = 0
         self.invisible_time = 0
         self.status_invisible = False
-        self.fire = gfw.image.load("res/fire.png")
+        self.fire_image = gfw.image.load("res/fire.png")
+        self.fire = self.fire_image
         self.fire_time = 0
         self.fire_fidx = 0
         self.fire_w = self.fire.w // 8
@@ -41,7 +42,7 @@ class Student:
         self.status_angry = False
 
     def draw(self):
-        if self.status_angry == True:
+        if self.status_angry == True and self.fire is not None:
             self.fire.clip_draw(self.fire_fidx * self.fire_w, 0, self.fire_w, self.fire.h, self.x, self.y + 30,\
                                 self.size_w + 18, self.size_h + 101)
         sx = self.fidx * self.s_width
@@ -126,6 +127,11 @@ class Student:
             self.fire_time += gfw.delta_time
             fire_frame = self.fire_time * 10
             self.fire_fidx = int(fire_frame) % 8
+            if self.angry_time < 1.3:  # adrenaline 지속시간이 얼마 안남으면 깜빡거림
+                if self.fire is not None:
+                    self.fire = None
+                elif self.fire is None:
+                    self.fire = self.fire_image
         else:
             self.angry_time = 0
             self.status_angry = False
