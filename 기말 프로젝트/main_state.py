@@ -51,7 +51,6 @@ def enter():
     collide_b_wav = load_wav('res/c_b.wav')
 
 
-
 def update():
     global state
     if state == GAME_OVER:
@@ -61,7 +60,6 @@ def update():
         return
     gfw.world.update()
     generator.update(playtime())
-    # print(' book:', gfw.world.count_at(2))
     for b in gfw.world.objects_at(gfw.world.layer.book):
         check_book(b)
     for i in gfw.world.objects_at(gfw.world.layer.item):
@@ -82,9 +80,9 @@ def paused_update():    # pause 시 update 해줄 것 - book 애니메이션
 def check_book(b):
     global collide_b_wav
     if gobj.collides_box(student, b):
-        if student.status_invisible == True:    # 투명상태이면 충돌해도 변화 x
+        if student.status_invisible is True:    # 투명상태이면 충돌해도 변화 x
             return
-        if student.status_angry == True:    # angry 상태이면 충돌시 더 많은 점수 획득 & 무적
+        if student.status_angry is True:    # angry 상태이면 충돌시 더 많은 점수 획득 & 무적
             score.score += 15
             b.remove()
             return
@@ -104,14 +102,14 @@ def check_book(b):
 def check_item(i):  # item과 충돌
     global collide_b_wav
     if gobj.collides_box(student, i):
-        if student.status_invisible == True:    # 투명화 상태에서는 다른 item 먹을 수 없음
+        if student.status_invisible is True:    # 투명화 상태에서는 다른 item 먹을 수 없음
             return
         collide_b_wav.play()
         if i.type == 1:     # 투명화
             student.invisible_time = 5
             student.status_invisible = True
             student.image = student.image2
-            if student.status_angry == True:    # angry 상태에서 투명화되면 angry 효과 해제
+            if student.status_angry is True:    # angry 상태에서 투명화되면 angry 효과 해제
                 student.status_angry = False
                 student.angry_time = 0
                 student.fire = None
@@ -156,20 +154,20 @@ def update_music():     # 기본, exam_time 배경음악 변경
     global bg_music1, bg_music2, play_music1, play_music2
     for i in range(0, 30):
         if int(playtime()) == (i * generator.stage_cycle) - generator.exam_cycle:
-            if play_music1 == True:
+            if play_music1 is True:
                 bg_music1.stop()
                 play_music1 = False
-            if play_music2 == False:
+            if play_music2 is False:
                 bg_music2.repeat_play()
                 play_music2 = True
         if int(playtime()) == (i * generator.stage_cycle):
-            if play_music2 == True:
+            if play_music2 is True:
                 bg_music2.stop()
                 play_music2 = False
-            if play_music1 == False:
+            if play_music1 is False:
                 bg_music1.repeat_play()
                 play_music1 = True
-    if play_music2 == True:
+    if play_music2 is True:
         bg_music1.set_volume(130)
     else:
         bg_music1.set_volume(50)

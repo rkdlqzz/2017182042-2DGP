@@ -5,10 +5,10 @@ import gobj
 
 class Student:
     KEY_MAP = {
-        (SDL_KEYDOWN, SDLK_LEFT): (-1.5, 0),
-        (SDL_KEYDOWN, SDLK_RIGHT): (1.5, 0),
-        (SDL_KEYUP, SDLK_LEFT): (1.5, 0),
-        (SDL_KEYUP, SDLK_RIGHT): (-1.5, 0),
+        (SDL_KEYDOWN, SDLK_LEFT): (-2.0, 0),
+        (SDL_KEYDOWN, SDLK_RIGHT): (2.0, 0),
+        (SDL_KEYUP, SDLK_LEFT): (2.0, 0),
+        (SDL_KEYUP, SDLK_RIGHT): (-2.0, 0),
     }
 
     def __init__(self):
@@ -42,7 +42,7 @@ class Student:
         self.status_angry = False
 
     def draw(self):
-        if self.status_angry == True and self.fire is not None:
+        if self.status_angry is True and self.fire is not None:
             self.fire.clip_draw(self.fire_fidx * self.fire_w, 0, self.fire_w, self.fire.h, self.x, self.y + 30,\
                                 self.size_w + 18, self.size_h + 101)
         sx = self.fidx * self.s_width

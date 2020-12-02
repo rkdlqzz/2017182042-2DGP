@@ -1,6 +1,7 @@
 from pico2d import *
 import gfw
 
+
 def point_add(posx, posy, deltax, deltay):
     x1 = posx + deltax
     y1 = posy + deltay

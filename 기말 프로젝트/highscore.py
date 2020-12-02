@@ -8,10 +8,12 @@ scores = []
 MAX_SCORE_COUNT = 10
 last_rank = -1
 
+
 class Entry:
     def __init__(self, score):
         self.score = score
         self.time = time.time()
+
 
 def load():
     global font, font2, panel, bg
@@ -25,14 +27,15 @@ def load():
         f = open(FILENAME, "rb")
         scores = pickle.load(f)
         f.close()
-        #print("Scores:", scores)
     except:
         print("No highscore file")
+
 
 def save():
     f = open(FILENAME, "wb")
     pickle.dump(scores, f)
     f.close()
+
 
 def add(score):
     global scores, last_rank
@@ -53,6 +56,7 @@ def add(score):
         scores.pop(-1)
     if last_rank <= MAX_SCORE_COUNT:
         save()
+
 
 def draw():
     global font, font2, last_rank, panel, bg
@@ -80,6 +84,7 @@ def draw():
         font.draw(360, y, time.asctime(time.localtime(e.time)), color)
         y -= 45
         rank += 1
+
 
 def update():
     pass

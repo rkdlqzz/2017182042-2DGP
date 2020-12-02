@@ -64,7 +64,7 @@ def gen_item():
     type = random.randint(1, 3)     # item type 랜덤하게
     i = Item(x, type)
     gfw.world.add(gfw.world.layer.item, i)
-    next = 5 - stage * 1.2
+    next = 5 - stage * 1.2  # 초기 - 5~6초마다 젠, stage 증가할수록 젠시간 감소
     next_gen_item = random.uniform(next, next + 1)
 
 

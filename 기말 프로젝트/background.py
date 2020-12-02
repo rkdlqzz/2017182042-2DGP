@@ -15,7 +15,7 @@ class Background:
         x = get_canvas_width() // 2
         sx = student.x
         dx = x - sx
-        if generator.exam == False:
+        if generator.exam is False:
             self.image1.draw(x + dx * 0.2, 375, 1280, 750)
         else:
             self.image2.draw(x + dx * 0.2, 375, 1280, 750)

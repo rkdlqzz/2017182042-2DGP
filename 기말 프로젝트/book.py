@@ -19,7 +19,6 @@ class Book:
         self.b_height = self.image.h // 4
         self.time = 0
 
-
     def draw(self):
         sx = self.b_width - (self.fidx % 2) * self.b_width
         sy = (self.fidx // 2) * self.b_height
