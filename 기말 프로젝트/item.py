@@ -7,11 +7,12 @@ class Item:
         self.type = type
         if self.type == 1:
             self.size = 70
+            self.image = gfw.image.load('res/potion.png')
         if self.type == 2:
-            self.size = 100
+            self.size = 70
+            self.image = gfw.image.load('res/life.png')
         self.x, self.y = x, get_canvas_height() + self.size
         self.dx, self.dy = 0, -100
-        self.image = gfw.image.load('res/potion.png')
         self.time = 0
 
     def draw(self):
@@ -25,6 +26,10 @@ class Item:
         gfw.world.remove(self)
 
     def get_bb(self):
-        halfw = self.size // 2 - 15
-        halfh = self.size // 2
+        if self.type == 1:
+            halfw = self.size // 2 - 15
+            halfh = self.size // 2
+        elif self.type == 2:
+            halfw = self.size // 2 - 10
+            halfh = self.size // 2 - 12
         return self.x - halfw, self.y - halfh, self.x + halfw, self.y + halfh

@@ -168,7 +168,7 @@ def draw():
         paused_draw()
     if state == GAME_OVER:
         highscore.draw()
-    # gobj.draw_collision_box()
+    gobj.draw_collision_box()
 
 
 def paused_draw():  # pause 시 메뉴 그리기

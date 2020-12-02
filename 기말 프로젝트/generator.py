@@ -6,7 +6,7 @@ from item import Item
 
 next_gen_small = 0
 next_gen_big = 5
-next_gen_item = 5
+next_gen_item = 1   # 5
 last_stage = -1
 display_time = 0
 
@@ -61,9 +61,10 @@ def gen_big():
 def gen_item():
     global next_gen_item
     x = random.randint(0, 800)
-    i = Item(x, 1)
+    type = random.randint(1, 2)     # item type 랜덤하게
+    i = Item(x, type)
     gfw.world.add(gfw.world.layer.item, i)
-    next = 5  # 초기 - 5~6초마다 젠, stage 증가할수록 젠시간 감소
+    next = 1 # 5
     next_gen_item = random.uniform(next, next + 1)
 
 
