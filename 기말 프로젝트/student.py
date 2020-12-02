@@ -33,9 +33,17 @@ class Student:
         self.scale_time = 0
         self.invisible_time = 0
         self.status_invisible = False
+        self.fire = gfw.image.load("res/fire.png")
+        self.fire_time = 0
+        self.fire_fidx = 0
+        self.fire_w = self.fire.w // 8
+        self.angry_time = 0
+        self.status_angry = False
 
     def draw(self):
-        # print(self.s_width, self.s_height)
+        if self.status_angry == True:
+            self.fire.clip_draw(self.fire_fidx * self.fire_w, 0, self.fire_w, self.fire.h, self.x, self.y + 30,\
+                                self.size_w + 18, self.size_h + 101)
         sx = self.fidx * self.s_width
         sy = self.action * self.s_height
         self.image.clip_draw(sx, sy, self.s_width, self.s_height, self.x, self.y, self.size_w, self.size_h)
@@ -58,7 +66,8 @@ class Student:
                 self.action = 1
         gobj.move_obj(self)
         self.update_size()
-        self.update_image()
+        self.update_invisible()
+        self.update_angry()
 
     def updateDelta(self, ddx, ddy):
         self.dx += ddx
@@ -92,11 +101,13 @@ class Student:
         if (self.scale_time > 0 and self.size_w < 57 + s_max):
             self.size_w += 1
             self.size_h += 1.1
+            self.y += 0.25
         if (self.scale_time == 0 and self.size_w > 57):
             self.size_w -= 1
             self.size_h -= 1.1
+            self.y -= 0.25
 
-    def update_image(self):  # 투명화 체크
+    def update_invisible(self):  # 투명화 체크
         if self.invisible_time > 0:
             self.invisible_time -= gfw.delta_time
             if self.invisible_time < 1.3:   # 투명화 지속시간이 얼마 안남으면 깜빡거림
@@ -108,3 +119,13 @@ class Student:
             self.invisible_time = 0
             self.image = self.image1
             self.status_invisible = False
+
+    def update_angry(self):  # angry 체크
+        if self.angry_time > 0:
+            self.angry_time -= gfw.delta_time
+            self.fire_time += gfw.delta_time
+            fire_frame = self.fire_time * 10
+            self.fire_fidx = int(fire_frame) % 8
+        else:
+            self.angry_time = 0
+            self.status_angry = False

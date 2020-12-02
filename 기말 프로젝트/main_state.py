@@ -17,7 +17,7 @@ black_w = 370
 def enter():
     global state
     state = IN_GAME
-    gfw.world.init(['background', 'book', 'item', 'student', 'highscore', 'ui'])
+    gfw.world.init(['background', 'student', 'book', 'item', 'highscore', 'ui'])
     global student
     student = Student()
     gfw.world.add(gfw.world.layer.student, student)
@@ -61,7 +61,7 @@ def update():
         return
     gfw.world.update()
     generator.update(playtime())
-    # print(' book:', gfw.world.count_at(1))
+    # print(' book:', gfw.world.count_at(2))
     for b in gfw.world.objects_at(gfw.world.layer.book):
         check_book(b)
     for i in gfw.world.objects_at(gfw.world.layer.item):
@@ -85,8 +85,8 @@ def check_book(b):
         if student.status_invisible == True:    # 투명상태이면 충돌해도 변호 x
             return
         collide_b_wav.play()
-        if student.decrease_life():
-            end_game()
+        #if student.decrease_life():
+        #    end_game()
         if b.type == 2: # book2와 충돌 시 student 거대화
             student.scale_time = 5
         score.score += 5
@@ -106,8 +106,10 @@ def check_item(i):  # item과 충돌
             student.status_invisible = True
             student.image = student.image2
         if i.type == 2:     # 라이프
-            if student.increase_life():  # life가 max인 경우 추가점수
-                score.score += 10
+            student.status_angry = True
+            student.angry_time = 5
+            #if student.increase_life():  # life가 max인 경우 추가점수
+            #    score.score += 10
         i.remove()
         return
     if i.y < -i.size + 50:
@@ -164,7 +166,7 @@ def update_music():     # 기본, exam_time 배경음악 변경
 def draw():
     gfw.world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
-    font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
+    # font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
     display_stage()
     if paused:
         paused_draw()
@@ -190,17 +192,19 @@ def paused_draw():  # pause 시 메뉴 그리기
 def display_stage():    # stage 변경 시
     global black_w
     if generator.display_time != 0:
-        black.draw(get_canvas_width() // 2, 470, black_w, 170)
-        if generator.display_time == 3:
-            black_w = 370
-        if black_w <= 1100:
-            black_w += 20
-        rectangle.draw(get_canvas_width() // 2, get_canvas_height() // 2 + 100, 400, 110)
-        font.draw(get_canvas_width() // 2 - 60, get_canvas_height() // 2 + 100, 'STAGE %d'\
-                  % (generator.stage + 1), (200, 200, 200))
+        if generator.display_time <= 3:
+            black.draw(get_canvas_width() // 2, 470, black_w, 170)
+            if generator.display_time == 3:
+                pass
+            if black_w <= 1100:
+                black_w += 10
+            rectangle.draw(get_canvas_width() // 2, get_canvas_height() // 2 + 100, 400, 110)
+            font.draw(get_canvas_width() // 2 - 60, get_canvas_height() // 2 + 100, 'STAGE %d'\
+                      % (generator.stage + 1), (200, 200, 200))
         if not paused and not state == GAME_OVER:
             generator.display_time -= gfw.delta_time
     if generator.display_time < 0:
+        black_w = 370
         generator.display_time = 0
 
 
@@ -213,6 +217,8 @@ def start_game():
     state = IN_GAME
     enter()
     generator.last_stage = -2
+    global black_w
+    black_w = 370
 
 
 def end_game():
