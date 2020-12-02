@@ -82,12 +82,16 @@ def paused_update():    # pause 시 update 해줄 것 - book 애니메이션
 def check_book(b):
     global collide_b_wav
     if gobj.collides_box(student, b):
-        if student.status_invisible == True:    # 투명상태이면 충돌해도 변호 x
+        if student.status_invisible == True:    # 투명상태이면 충돌해도 변화 x
+            return
+        if student.status_angry == True:    # angry 상태이면 충돌시 더 많은 점수 획득 & 무적
+            score.score += 15
+            b.remove()
             return
         collide_b_wav.play()
         #if student.decrease_life():
         #    end_game()
-        if b.type == 2: # book2와 충돌 시 student 거대화
+        if b.type == 2:  # book2와 충돌 시 student 거대화
             student.scale_time = 5
         score.score += 5
         b.remove()
@@ -100,16 +104,19 @@ def check_book(b):
 def check_item(i):  # item과 충돌
     global collide_b_wav
     if gobj.collides_box(student, i):
+        if student.status_invisible == True:    # 투명화 상태에서는 다른 item 먹을 수 없음
+            return
         collide_b_wav.play()
         if i.type == 1:     # 투명화
             student.invisible_time = 5
             student.status_invisible = True
             student.image = student.image2
         if i.type == 2:     # 라이프
+            if student.increase_life():  # life가 max인 경우 추가점수
+                score.score += 10
+        if i.type == 3:     # 아드레날린 주사
             student.status_angry = True
             student.angry_time = 5
-            #if student.increase_life():  # life가 max인 경우 추가점수
-            #    score.score += 10
         i.remove()
         return
     if i.y < -i.size + 50:

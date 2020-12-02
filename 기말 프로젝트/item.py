@@ -6,11 +6,12 @@ class Item:
     def __init__(self, x, type):
         self.type = type
         if self.type == 1:
-            self.size = 70
             self.image = gfw.image.load('res/potion.png')
         if self.type == 2:
-            self.size = 70
             self.image = gfw.image.load('res/life.png')
+        if self.type == 3:
+            self.image = gfw.image.load('res/adrenaline.png')
+        self.size = 70
         self.x, self.y = x, get_canvas_height() + self.size
         self.dx, self.dy = 0, -100
         self.time = 0
@@ -32,4 +33,7 @@ class Item:
         elif self.type == 2:
             halfw = self.size // 2 - 10
             halfh = self.size // 2 - 12
+        elif self.type == 3:
+            halfw = self.size // 2 - 20
+            halfh = self.size // 2
         return self.x - halfw, self.y - halfh, self.x + halfw, self.y + halfh
