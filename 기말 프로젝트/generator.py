@@ -13,8 +13,8 @@ display_time = 0
 
 def update(t):
     global next_gen_small, next_gen_big, stage, stage_cycle, exam, exam_cycle, last_stage, display_time, next_gen_item
-    #stage_cycle = 45    # stage 나누는 주기
-    stage_cycle = 10
+    stage_cycle = 45    # stage 나누는 주기
+    #stage_cycle = 10
     stage = 3
     # stage = t // stage_cycle
     if stage > 3:   # stage 최대 4
@@ -22,8 +22,8 @@ def update(t):
     if stage > last_stage:  # stage가 바뀌는 경우
         display_time = 4.5
         last_stage += 1
-    #exam_cycle = 15   # 시험기간 몇 초인지
-    exam_cycle = 5
+    exam_cycle = 15   # 시험기간 몇 초인지
+    #exam_cycle = 5
     exam = check_exam(t)
     next_gen_small -= gfw.delta_time
     next_gen_big -= gfw.delta_time
@@ -62,9 +62,10 @@ def gen_item():
     global next_gen_item
     x = random.randint(0, 800)
     type = random.randint(1, 3)     # item type 랜덤하게
-    i = Item(x, type)
+    speed = -100 - (15 * stage)
+    i = Item(x, type, speed)
     gfw.world.add(gfw.world.layer.item, i)
-    next = 5 - stage * 1.2  # 초기 - 5~6초마다 젠, stage 증가할수록 젠시간 감소
+    next = 5 - stage  # 초기 - 5~6초마다 젠, stage 증가할수록 젠시간 감소
     next_gen_item = random.uniform(next, next + 1)
 
 

@@ -83,12 +83,12 @@ def check_book(b):
         if student.status_invisible is True:    # 투명상태이면 충돌해도 변화 x
             return
         if student.status_angry is True:    # angry 상태이면 충돌시 더 많은 점수 획득 & 무적
-            score.score += 15
+            score.score += 10
             b.remove()
             return
         collide_b_wav.play()
-        #if student.decrease_life():
-        #    end_game()
+        if student.decrease_life():
+            end_game()
         if b.type == 2:  # book2와 충돌 시 student 거대화
             student.scale_time = 5
         score.score += 5
@@ -115,7 +115,7 @@ def check_item(i):  # item과 충돌
                 student.fire = None
         if i.type == 2:     # 라이프
             if student.increase_life():  # life가 max인 경우 추가점수
-                score.score += 10
+                score.score += 30
         if i.type == 3:     # 아드레날린 주사
             student.status_angry = True
             student.angry_time = 5
@@ -182,7 +182,7 @@ def draw():
         paused_draw()
     if state == GAME_OVER:
         highscore.draw()
-    gobj.draw_collision_box()
+    #gobj.draw_collision_box()
 
 
 def paused_draw():  # pause 시 메뉴 그리기

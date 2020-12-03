@@ -33,6 +33,6 @@ class Book:
         gfw.world.remove(self)
 
     def get_bb(self):
-        halfw = self.size // 2
+        halfw = self.size // 2 - 5
         halfh = self.size // 2 - self.s
         return self.x - halfw + self.s, self.y - halfh, self.x + halfw, self.y + halfh
