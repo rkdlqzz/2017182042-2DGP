@@ -82,11 +82,11 @@ def check_book(b):
     if gobj.collides_box(student, b):
         if student.status_invisible is True:    # 투명상태이면 충돌해도 변화 x
             return
+        collide_b_wav.play()
         if student.status_angry is True:    # angry 상태이면 충돌시 더 많은 점수 획득 & 무적
             score.score += 10
             b.remove()
             return
-        collide_b_wav.play()
         if student.decrease_life():
             end_game()
         if b.type == 2:  # book2와 충돌 시 student 거대화
