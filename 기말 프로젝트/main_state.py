@@ -50,9 +50,10 @@ def enter():
     bg_music2 = load_music('res/bg2.mp3')
     play_music2 = False
     collide_b_wav = load_wav('res/c_b.wav')
-    global bonus_wav, collide_i_wav
+    global bonus_wav, collide_i_wav, game_over_wav
     bonus_wav = load_wav('res/bonus.wav')
     collide_i_wav = load_wav('res/c_i.wav')
+    game_over_wav = load_wav('res/gameover.wav')
 
 
 def update():
@@ -82,7 +83,6 @@ def paused_update():    # pause 시 update 해줄 것 - book 애니메이션
 
 
 def check_book(b):
-    global collide_b_wav
     if gobj.collides_box(student, b):
         if student.status_invisible is True:    # 투명상태이면 충돌해도 변화 x
             return
@@ -91,9 +91,10 @@ def check_book(b):
             score.score += 10
             b.remove()
             return
-        collide_b_wav.play()
         if student.decrease_life():
+            game_over_wav.play()
             end_game()
+        collide_b_wav.play()
         if b.type == 2:  # book2와 충돌 시 student 거대화
             student.scale_time = 5
         score.score += 5
@@ -105,12 +106,11 @@ def check_book(b):
 
 
 def check_item(i):  # item과 충돌
-    global collide_b_wav
     if gobj.collides_box(student, i):
         if student.status_invisible is True:    # 투명화 상태에서는 다른 item 먹을 수 없음
             return
-        collide_i_wav.play()
         if i.type == 1:     # 투명화
+            collide_i_wav.play()
             student.invisible_time = 5
             student.status_invisible = True
             student.image = student.image2
@@ -122,7 +122,10 @@ def check_item(i):  # item과 충돌
             if student.increase_life():  # life가 max인 경우 추가점수
                 bonus_wav.play()
                 score.score += 30
+            else:
+                collide_i_wav.play()
         if i.type == 3:     # 아드레날린 주사
+            collide_i_wav.play()
             student.status_angry = True
             student.angry_time = 5
             student.fire = student.fire_image
@@ -182,13 +185,12 @@ def update_music():     # 기본, exam_time 배경음악 변경
 def draw():
     gfw.world.draw()
     font.draw(get_canvas_width() - 250, get_canvas_height() - 35, 'STAGE - %d학년' % (generator.stage + 1))
-    # font.draw(get_canvas_width() - 550, get_canvas_height() - 40, 'time %d' % (playtime() + 1))
     display_stage()
     if paused:
         paused_draw()
     if state == GAME_OVER:
         highscore.draw()
-    #gobj.draw_collision_box()
+    # gobj.draw_collision_box()
 
 
 def paused_draw():  # pause 시 메뉴 그리기
@@ -268,10 +270,10 @@ def handle_event(e):
 
 
 def exit():
-    global bg_music1, bg_music2, collide_b_wav, collide_i_wav, bonus_wav
+    global bg_music1, bg_music2, collide_b_wav, collide_i_wav, bonus_wav, game_over_wav
     bg_music1.stop()
     bg_music2.stop()
-    del bg_music1, bg_music2, collide_b_wav, collide_i_wav, bonus_wav
+    del bg_music1, bg_music2, collide_b_wav, collide_i_wav, bonus_wav, game_over_wav
 
 
 if __name__ == '__main__':

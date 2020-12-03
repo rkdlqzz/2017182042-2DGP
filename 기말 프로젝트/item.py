@@ -13,7 +13,7 @@ class Item:
             self.image = gfw.image.load('res/adrenaline.png')
         self.size = 70
         self.x, self.y = x, get_canvas_height() + self.size
-        self.dx, self.dy = 0, speed#-100
+        self.dx, self.dy = 0, speed
         self.time = 0
 
     def draw(self):
