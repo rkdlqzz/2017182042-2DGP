@@ -25,6 +25,8 @@ def enter():
     adrenaline = gfw.image.load('res/adrenaline.png')
     potion = gfw.image.load('res/potion.png')
     life = gfw.image.load('res/life.png')
+    global button_wav
+    button_wav = load_wav('res/button.wav')
 
 
 def update():
@@ -78,8 +80,10 @@ def handle_event(e):
         if e.key == SDLK_ESCAPE:
             gfw.quit()
         elif e.key == SDLK_SPACE:
-            gfw.push(main_state)
+            if help_ is False:
+                gfw.push(main_state)
         elif e.key == SDLK_h:
+            button_wav.play()
             if help_ is False:
                 help_ = True
             elif help_ is True:
@@ -87,9 +91,9 @@ def handle_event(e):
 
 
 def exit():
-    global bg, panel, font, font2, bg_music
+    global bg, panel, font, font2, bg_music, button_wav
     bg_music.stop()
-    del bg, panel, font, font2, bg_music
+    del bg, panel, font, font2, bg_music, button_wav
 
 
 def pause():
