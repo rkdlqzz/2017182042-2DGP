@@ -50,10 +50,11 @@ def enter():
     bg_music2 = load_music('res/bg2.mp3')
     play_music2 = False
     collide_b_wav = load_wav('res/c_b.wav')
-    global bonus_wav, collide_i_wav, game_over_wav
+    global bonus_wav, collide_i_wav, game_over_wav, button_wav
     bonus_wav = load_wav('res/bonus.wav')
     collide_i_wav = load_wav('res/c_i.wav')
     game_over_wav = load_wav('res/gameover.wav')
+    button_wav = load_wav('res/button.wav')
 
 
 def update():
@@ -257,6 +258,7 @@ def handle_event(e):
             end_game()
             gfw.pop()
         elif e.key == SDLK_p:
+            button_wav.play()
             global paused
             if state != GAME_OVER:
                 paused = not paused
