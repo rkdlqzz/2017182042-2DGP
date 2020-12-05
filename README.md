@@ -138,3 +138,7 @@ student의 움직임에 따라서 약간의 스크롤(좌,우)
 ![도움말](https://user-images.githubusercontent.com/70790091/101041984-03486080-35c0-11eb-9361-7f30796a9df3.png)
 ## 시험기간
 * 적이 폭주해서 크기가 커지고 모션이 빨라진다.
+## 발표 영상
+* 1차 발표 - https://youtu.be/Z8APhUXU3kg   
+* 2차 발표 - https://youtu.be/Y8FbhazPz8k
+* 최종 발표 - https://youtu.be/8YodGQ0g5DQ   
